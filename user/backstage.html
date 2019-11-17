@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/backstage.css">
+	<script src="../js/src/islogin.js"></script>
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class="left">
+			</div>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width: 1400px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">系统管理</li>
+						<li>管理员列表</li>
+					</ol>
+					<!-- 筛选条件 -->
+					<form class="selecttime form-inline margin10" style="min-width:1400px;background-color: #fff; padding: 10px 20px;">
+						<label for="exampleInputEmail2">注册日期:</label>
+						<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day" id="selectTime" style="margin-right: 10px;">
+							<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+							<input placeholder="开始日期" name=""
+								class="c-datepicker-data-input only-date dynamicbeginDateLine beginDateLine beginDate select-beginDate" value="">
+							<span class="c-datepicker-range-separator">至</span>
+							<input placeholder="结束日期" name=""
+								class="c-datepicker-data-input only-date dynamicendDateLine select-endDate endDateLine endDate" value="">
+						</div>
+						<div style="display: inline; margin-right: 10px;">
+							<label>登录名:</label>
+							<input type="text" class="form-input username" placeholder="请输入登录名" style="min-width:146px;">
+						</div>
+						<div style="display:inline; margin-right: 10px;">
+							<label>手机号:</label>
+							<input type="text" class="form-input select-phone" placeholder="请输入手机号" style="min-width:146px;">
+						</div>
+						<div style="display:inline; margin-right: 10px;">
+							<label>部门:</label>
+							<select class="select-dev">
+								<option value="">全部</option>
+								<option value="技术部">技术部</option>
+								<option value="运营部">运营部</option>
+								<option value="市场部">市场部</option>
+							</select>
+						</div>
+						<div style="display:inline; margin-right: 10px;">
+							<label>状态:</label>
+							<select class="select-userStatus">
+								<option value="">全部</option>
+								<option value="1">正常</option>
+								<option value="2">冻结</option>
+							</select>
+						</div>
+						<div class="btn btn-green checkapp" style="margin-right: 10px;">搜索</div>
+						<div class="btn btn-yellow rest">重置</div>
+					</form>
+					<div class="userinfo margin10" style="min-width:1400px;">
+						<div>
+							<div class="addVersion btn adduser btn-sm btn-default btn-success root" style="display:none">新增用户</div>
+
+						</div>
+						<table class="table table-hover tables" id="table" style="margin-top: 10px;">
+						</table>
+					</div>
+					<div id="pageTool" style="min-width:1400px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" id="reset-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">重置密码</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="reset-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="reset-name" placeholder="用户名" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="reset-pass" name="resetpass" placeholder="密码">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary reset-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 超级管理员添加用户的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="adduser">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">添加用户</h4>
+				</div>
+				<div class="modal-body">
+					<form class="adduser-form form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户名:</label>
+							<div class="col-sm-10">
+									<input type="text" class="form-control addusername" autocomplete="off" placeholder="用户名" name="addusername">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">密码:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control adduserpassword" autocomplete="off" placeholder="密码" name="adduserpassword">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">真实姓名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control realName" name="realName" autocomplete="off" placeholder="真实姓名">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">手机号:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control phone" name="phone" autocomplete="off" placeholder="手机号码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">电子邮箱:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control email" name="email" autocomplete="off" placeholder="电子邮箱">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">部门:</label>
+							<div class="col-sm-10">
+								<!-- <input type="email" class="form-control" id="inputEmail3" placeholder="Email"> -->
+								<div class="checkbox">
+									<label style="margin-right: 10px"> 
+										<input type="radio" class="department" value="技术部" name="department" aria-label="技术部">技术部
+									</label>
+									<label style="margin-right: 10px"> 
+										<input type="radio" class="department" value="运营部" name="department" aria-label="运营部">运营部
+									</label>
+									<label> 
+										<input type="radio" class="department" value="市场部" name="department" aria-label="市场部">市场部
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">状态:</label>
+							<div class="col-sm-10">
+								<div class="checkbox">
+									<label style="margin-right: 10px">
+										<input type="radio" class="status" value="1" name="status" aria-label="技术部">正常
+									</label>
+									<label >
+										<input type="radio" class="status" value="2" name="status" aria-label="技术部">冻结
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">权限选择:</label>
+							<div class="col-sm-10 permissions">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary addUserSave">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 管理员操作日志 -->
+	<script type="text/html" id="modal-log-head">
+		<div class="item active" data-type="1">创建用户</div> 
+		<div class="item" data-type="2">发布动态</div> 
+		<div class="item" data-type="3">解决举报</div> 
+		<div class="item" data-type="4">解决意见反馈</div> 
+		<div class="item" data-type="5">推荐动态</div>
+		<div class="item" data-type="6">封禁用户</div> 
+		<div class="item" data-type="7">删除动态</div> 
+		<div class="item" data-type="8">删除评论</div> 		
+	</script>
+	<!-- 管理员操作日志详情 有数据的情况 有内容,有昵称-->
+	<script type="text/html" id="modal-log-details">
+		<table class="table">
+			<thead>
+				{{ each data.data as v i }}
+					{{if i == 0 }}
+					<tr>
+						<th>序号</th>
+						{{if v.userName != undefined}} <th>操作人</th> {{/if}}
+						{{if v.idObj != undefined}} <th>id</th> {{ /if }}
+						{{if v.createTime != undefined}} <th>操作时间</th> {{ /if }}
+						{{if v.ip != undefined}} <th>ip</th> {{ /if }}
+						<% if (v.type != 1 || v.type != 2) {%>
+							<th>内容</th>
+						<%}%>
+					</tr>
+					{{ /if }}
+				{{ /each }}
+			</thead>
+			<tbody>
+					{{ each data.data as v i }}
+						<tr>
+							<td>{{ i+1 }}</td>
+							<% if (v.userName!= undefined) { %><td>{{ v.userName }}</td> <% } %>
+							<% if (v.idObj != undefined) { %> <td>{{ v.idObj  }}</td> <% } %>
+							<% if (v.createTime != undefined) { %> <td>{{ v.createTime | timeFormat }}</td> <% } %>
+							<% if (v.ip != undefined) { %> <td>{{ v.ip }}</td> <% } %>
+							<% if (v.content != undefined) { %> <td>
+								<div class='modal-log-content'> {{ v.content }} </div>
+							</td> <% } %>
+						</tr>
+					{{ /each }}
+			</tbody>
+		</table>
+	</script>
+	<!-- 有内容没有昵称的情况 -->
+	<script type="text/html" id="modal-log-details-nonick">
+			<table class="table">
+				<thead>
+					{{ each data.data as v i }}
+						{{if i == 0 }}
+						<tr>
+							<th>序号</th>
+							{{if v.userName != undefined}} <th>操作人</th> {{/if}}
+							{{if v.idObj != undefined}} <th>id</th> {{ /if }}
+							{{if v.createTime != undefined}} <th>操作时间</th> {{ /if }}
+							{{if v.ip != undefined}} <th>ip</th> {{ /if }}
+							<% if (v.type != 1 || v.type != 2) {%>
+								<th>内容</th>
+							<%}%>
+						</tr>
+						{{ /if }}
+					{{ /each }}
+				</thead>
+				<tbody>
+						{{ each data.data as v i }}
+							<tr>
+								<td>{{ i+1 }}</td>
+								<% if (v.userName!= undefined) { %><td>{{ v.userName }}</td> <% } %>
+								<% if (v.idObj != undefined) { %> <td>{{ v.idObj  }}</td> <% } %>
+								<% if (v.createTime != undefined) { %> <td>{{ v.createTime | timeFormat }}</td> <% } %>
+								<% if (v.ip != undefined) { %> <td>{{ v.ip }}</td> <% } %>
+								<% if (v.content != undefined) { %> <td>{{ v.content }}</td> <% } %>
+							</tr>
+						{{ /each }}
+				</tbody>
+			</table>
+	</script>
+	<!-- 没内容,有昵称 -->
+	<script type="text/html" id="modal-log-details-no-content">
+				<table class="table">
+					<thead>
+						{{ each data.data as v i }}
+							{{if i == 0 }}
+							<tr>
+								<th>序号</th>
+								{{if v.userName != undefined}} <th>操作人</th> {{/if}}
+								{{if v.idObj != undefined}} <th>id</th> {{ /if }}
+								{{if v.createTime != undefined}} <th>操作时间</th> {{ /if }}
+								{{if v.ip != undefined}} <th>ip</th> {{ /if }}
+								{{if v.nickName != undefined}} <th> 昵称</th> {{ /if }}
+							</tr>
+							{{ /if }}
+						{{ /each }}
+					</thead>
+					<tbody>
+							{{ each data.data as v i }}
+								<tr>
+									<td>{{ i+1 }}</td>
+									<% if (v.userName!= undefined) { %><td>{{ v.userName }}</td> <% } %>
+									<% if (v.idObj != undefined) { %> <td>{{ v.idObj  }}</td> <% } %>
+									<% if (v.createTime != undefined) { %> <td>{{ v.createTime | timeFormat }}</td> <% } %>
+									<% if (v.ip != undefined) { %> <td>{{ v.ip }}</td> <% } %>
+									<% if (v.nickName != undefined) { %> <td>{{ v.nickName }}</td> <% } %>
+								</tr>
+							{{ /each }}
+					</tbody>
+				</table>
+	</script>
+	<!-- 管理员操作日志详情 没有数据的情况-->
+	<script type="text/html" id="modal-log-details-null">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>操作人</th>
+						<th>操作时间</th>
+						<th>ip</th>
+						<th>内容</th>
+						<th>昵称</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan='7'>暂无数据</td>
+					</tr>
+				</tbody>
+			</table>
+		</script>
+	<!-- 日志的数量显示 -->
+	<!-- 显示数字的 -->
+	<script type="text/html" id="tmp-count">
+		<div>
+			<p data-type="1" class="item">
+				<span>创建用户</span>
+				<span class="count-number">{{ data.type1 }}</span>
+			</p>
+			<p data-type="2" class="item">
+				<span>发布动态</span>
+				<span class="count-number">{{ data.type2 }}</span>
+			</p >
+			<p data-type="3" class="item">
+				<span>解决举报</span>
+				<span class="count-number">{{ data.type3 }}</span>
+			</p>
+			<p data-type="4" class="item">
+				<span>解决意见反馈</span>
+				<span class="count-number">{{ data.type4 }}</span>
+			</p>
+			<p data-type="5" class="item">
+				<span>推荐动态</span>
+				<span class="count-number">{{ data.type5 }}</span>
+			</p>
+			<p data-type="6" class="item">
+				<span>封禁用户</span>
+				<span class="count-number">{{ data.type6 }}</span>
+			</p>
+			<p data-type="7" class="item">
+				<span>删除动态</span>
+				<span class="count-number">{{ data.type7 }}</span>
+			</p>
+			<p data-type="8" class="item">
+				<span>删除评论</span>
+				<span class="count-number">{{ data.type8 }}</span>
+			</p>
+		</div>
+	</script>
+	<script type="text/html" id="tmp-hader">
+        <thead>
+                <tr>
+                    <th>序号</th>
+										<th>登录名</th>
+										<th>角色名</th>
+										<th>部门</th>
+										<th>邮箱</th>
+										<th>真实姓名</th>
+										<th>手机号</th>
+                    <th>最近一次登录的IP地址</th>
+                    <th>最近一次登录的时间</th>
+                    <th>用户登录的次数</th>
+                    <th>是否在线</th>
+                    <th>用户状态</th>
+										{{ if data[1010103] ||data[1010104] || data[1010105] || data[1010102]}}
+                    <th>操作</th>
+										{{ /if }}
+                </tr>
+            </thead>
+            <tbody class="info">
+								{{ each data.data as v i}}
+                    <tr>
+                        <td>{{ i+1 }}</td>
+												<td>{{ v.userName }}</td>
+												<td>{{ v.roleName }}</td>
+												<td>{{ v.department }}</td>
+												<td>{{ v.email }}</td>
+												<td>{{ v.realName }}</td>
+												<td>{{ v.phone }}</td>
+                        <td>{{ v.lastLoginIp}}</td>
+                        <td>{{ v.lastLoginTime | timeFormat }}</td>
+                        <td>{{ v.logins}}</td>
+                        <td>{{ if v.isOnLine == true}} <span class="color-blue">在线</span> {{ else if v.isOnLine == false}} <span class="color-red">离线</span>{{/if}}</td>
+                        <td class="status">{{ if v.userStatus ==1 }} <span class="color-blue">正常</span> {{ else if v.userStatus == 2}} <span class="color-red">封停</span>{{/if}}</td>
+												{{ if data[1010103] ||data[1010104] || data[1010105] || data[1010102]}}
+													<td data-role="{{v.roleType}}" data-username="{{v.userName}}">
+														{{ if data[1010103] }}
+															{{ if data.level < v.level || v.level == 0 }}
+																	{{ if v.userStatus == 1 }}
+																			<button type="button" class="btn btn-red freezeUser btn-sm" data-status="2" data-username="{{v.userName}}" data-type="1">冻结</button> 
+																	{{ else if v.userStatus == 2}}
+																			<button type="button" class="btn btn-green delidUser btn-sm" data-status="1" data-username="{{v.userName}}" data-type="1">解封</button>
+																	{{ /if }}
+															{{ /if }}
+														{{ /if }}
+														{{ if data[1010104] }}
+															{{ if data.level < v.level || v.level == 0 }}
+																<button type="button" class="btn btn-blue btn-sm btn-change" >权限</button>
+															{{ /if }}
+														{{ /if }}
+
+														{{ if data[1010105] }}
+															{{ if data.level < v.level || v.level == 0 }}
+																<button type="button" class="btn btn-yellow btn-sm btn-reset" data-userName="{{v.userName}}" >重置</button>
+															{{ /if }}
+														{{ /if }}
+
+														{{ if data[1010102] }}
+															{{ if data.level <= v.level || v.level == 0 }}
+																<button type="button" class="btn btn-blue btn-sm btn-log" data-username="{{ v.userName }}">日志</button>
+															{{ /if }}
+														{{ /if }}
+													</td>
+												{{ /if }}
+                    </tr>
+								{{/each}}
+            </tbody>
+    </script>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 冻结用户的提示框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="delusers">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					<p>是否冻结该用户</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+					<button type="button" class="btn btn-primary yes">是</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 这里是修改权限的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="modal-change">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改权限</h4>
+				</div>
+				<div class="modal-body">
+						<form class="form-horizontal">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">用户名:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control role_name"  value="" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">权限选择:</label>
+									<div class="col-sm-10 roleList">
+										<!-- <button type="submit" class="btn btn-default">Sign in</button> -->
+									</div>
+								</div>
+							</form>
+					<!-- <form class="change-form">
+						<div class="form-group">
+							<label class="name-ttext">用户名:</label>
+							<label class="username"></label>
+						</div>
+						<div class="form-group roleList">
+							<div class="checkbox">
+								<label>
+									<input type="radio" name="pitch" value="2" class='mange'> 管理员
+								</label>
+								<label>
+									<input type="radio" name="pitch" value="3" class="user"> 普通用户
+								</label>
+							</div>
+						</div>
+					</form> -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary change-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 提示的 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="tips">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示:</h4>
+				</div>
+				<div class="modal-body">
+					<p>One fine body&hellip;</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }} "  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 101}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 101}}
+										{{ if item.menuId == 10101}}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 10101}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 1 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+
+	<!-- 角色的模板 -->
+	<script type="text/html" id="tmp-roleList">
+		{{ each data.data as v i }}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="pitch" {{ if v.selected}} checked  {{ /if }} value="{{ v.id }}">
+					{{ v.roleName }}
+				</label>
+			</div>
+		{{ /each }}
+	</script>
+	<!-- 超级管理员查看日志的模态框 -->
+	<div class="modal fade " tabindex="-1" role="dialog" id="modal-log" data-i="1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" style="display: inline">日志查询</h4>
+					<div class="c-datepicker-date-editor J-datepicker-range addTime" style="float:right;margin-right: 30px;height: 35px;">
+						<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+						<input placeholder="开始日期" name="" class="c-datepicker-data-input beginDate  only-date" value="">
+						<span class="c-datepicker-range-separator">-</span>
+						<input placeholder="结束日期" name="" class="c-datepicker-data-input only-date endDate" value="">
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="count">
+
+					</div>
+					<div class="modal-body-contents">
+						<!-- 这里是显示数据 -->
+						<div class="data">
+
+						</div>
+						<div id="pageTools"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 新增用户的权限模板 -->
+	<script type="text/html" id="tmp-permissions">
+		{{ each data.data as v i }}
+				<label>
+					<input type="checkbox" name="ids" value="{{ v.id }}"> {{ v.roleName }}
+				</label>
+		{{ /each }}
+	</script>
+	<!-- 没有数据的模板 -->
+	<script type="text/html" id="no-data">
+		<thead>
+				<tr>
+						<th>序号</th>
+						<th>登录名</th>
+						<th>角色名</th>
+						<th>邮箱</th>
+						<th>手机号</th>
+						<th>最近一次登录的IP地址</th>
+						<th>最近一次登录的时间</th>
+						<th>用户登录的次数</th>
+						<th>是否在线</th>
+						<th>用户状态</th>
+						<th>操作</th>
+				</tr>
+		</thead>
+		<tbody class="info">
+			<tr>
+				<td colspan="12">没有数据</td>
+			</tr>
+		</tbody>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/backstage.js"></script>
+</body>
+
+</html>

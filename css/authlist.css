@@ -1,0 +1,39 @@
+.selecttime {
+	padding: 10px;
+	padding-left: 20px;
+	background-color: #fff;
+	margin: 0 10px;
+	border-radius: 4px;
+	border-bottom: 1px solid #ccc;
+	vertical-align: middle;
+}
+.selecttime> div {
+	margin-right: 10px;
+}
+.selecttime input {
+	height: 35px;
+}
+.authlist {
+	background-color: #fff;
+	margin: 10px 10px 0 10px;
+	padding: 10px 20px;
+	min-width: 1200px;
+}
+.authlist table {
+	text-align: center;
+	vertical-align: middle;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+#pageTool {
+	min-width: 1200px;
+}
+.ztree {
+	margin-left: -8px;
+	border: 1px solid #fff;
+}
+.tree-error {
+	border: 1px solid #a94442;
+	border-radius: 4px;
+}

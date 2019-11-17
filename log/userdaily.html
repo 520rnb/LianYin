@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/jquery.json-viewer.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/comment.css">
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width: 1300px;">
+						<li><a href="#">当前位置</a></li>
+						<li class="active">日志管理</li>
+						<li>APP访问日志</li>
+					</ol>
+					<div class="daily margin10" style="padding: 10px 20px;min-width: 1300px;">
+						<!-- 坑 -->
+					</div>
+					<!-- 分页 -->
+					<div id="pageTool" style="min-width:1300px"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+    </script>
+	<!-- 日志内容模板 -->
+	<script type="text/html" id="tmp-daily">
+        <table class="table table-hover " id="table">
+            <thead>
+                <tr>
+										<th>序号</th>
+										<th width="180">请求时间</th>		
+										<th>用户名</th>								
+                    <th>IP地址</th>
+										<th>请求方式</th>
+										<th>请求路径</th>
+										<th>执行时间</th>
+										<th>状态</th>
+                    <th>参数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{each data.list as v i}}
+                <tr>
+										<td>{{ i+1 }}</td>
+										<td>{{ v.time | timeFormat}}</td>
+										<td>{{ v.userId }}</td>
+                    <td>{{ v.ip }}</td>
+										<td>{{ v.method }}</td>
+										<td>{{ v.url }}</td>
+										<!-- 超过200ms用红色表示 -->
+										<!-- <td> {{if v.executeTime }}{{v.executeTime}} ms {{/if}}</td> -->
+										<td>
+											<%if (v.executeTime > 200){%>
+													<span class="color-red">{{ v.executeTime + 'ms' }}</span>
+												<%}else {%>
+													<span class='color-green'>{{v.executeTime+'ms'}}</span>
+												<%}%>
+										</td>
+										<td>{{if v.status == 0}}  <span class="color-red">失败</span> {{else if v.status == 1}} <span class="color-green">成功</span> {{/if}}</td>
+                    <td class="text-over">
+                        <code class='modal-json'>
+                            {{ v.urlParams }}
+                        </code>
+                    </td>
+                </tr>
+								{{/each}}
+            </tbody>
+        </table>
+    </script>
+	<!-- 这里是参数的转化的json -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="modal-json">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">详情</h4>
+				</div>
+				<div class="modal-body">
+					<pre id="text-pre"></pre>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 401 }} active {{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 401}}
+										{{ if item.menuId == 40101}}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 40101}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 401 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+	<!-- 没有数据的模板 -->
+	<script type="text/html" id="no-data">
+		<table class="table" style="text-align: center;">
+			<thead>
+				<tr>
+						<th>序号</th>
+						<th width="180">请求时间</th>
+						<th>用户名</th>
+						<th>IP地址</th>
+						<th>请求方式</th>
+						<th>请求路径</th>
+						<th>执行时间</th>
+						<th>状态</th>
+						<th>参数</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="9">没有数据</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/jquery.json-viewer.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/userdaily.js"></script>
+</body>
+
+</html>

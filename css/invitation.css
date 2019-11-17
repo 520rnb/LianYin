@@ -1,0 +1,109 @@
+.userSearch {
+	min-width: 1200px;
+	padding: 20px;
+	margin: 10px;
+	height: 59px;
+}
+img {
+	display: block;
+	cursor: pointer;
+}
+
+.userSearch > input {
+    width: 500px;
+		border: 1px solid #ccc;
+		vertical-align: middle;
+		height: 37px;
+		padding-left: 12px;
+		border-radius: 4px;
+}
+.userinfo {
+	background-color: #fff;
+	border-radius: 4px;
+	overflow: hidden;
+}
+.userinfo .title{
+	font-weight: bold;
+	font-size: 16px;
+	margin: 10px ;
+}
+table {
+	text-align: center;
+	vertical-align: middle;
+}
+.table>thead>tr>th {
+	text-align: left;
+}
+#no-data .table td{
+	text-align: center;
+}
+table img {
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	cursor: pointer;
+	display: inline;
+}
+.Pack-up {
+	cursor: pointer;
+}
+.useList {
+	background-color: #fff;
+	/* padding: 5px; */
+	/* margin: 5px; */
+	margin-top: 10px;
+	overflow: hidden;
+}
+.useList img {
+	width: 100px;
+	height: 100px;
+	border-radius: 4px;
+}
+.useList .title{
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-top: 10px;
+}
+.useList .content {
+	border: 1px solid #ccc;
+	width: 19%;
+	padding: 2px;
+	display: flex;
+	overflow: hidden;
+	margin-top: 10px;
+	border-radius: 4px;
+	margin: 0 calc(1%/2);
+	margin-bottom: 10px;
+	float: left;
+}
+.useList .content .item {
+	display: flex;
+	flex-direction: column; 
+}
+.useList .content p {
+	text-align: left;
+	font-size: 14px;
+	word-break: normal;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	padding-left: 2px;
+}
+#pageTool1{
+	background-color: #fff;
+	padding: 10px 0;
+}
+#pageTool1 ul {
+	margin: 0;
+}
+
+#table tr td {
+    text-align: left;
+}
+.userSearch > span {
+	font-weight: bold;
+}

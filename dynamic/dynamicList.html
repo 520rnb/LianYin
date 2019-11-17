@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/appUser.css">
+</head>
+
+<body>
+	<div class="loading" id="loading" style="display:none;">
+		<div class="loading-item">
+			<div class="donut"></div>
+			<p></p>
+		</div>
+	</div>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width:1600px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">动态列表</li>
+					</ol>
+					<form class="selecttime form-inline" style="min-width:1600px">
+						<!-- <div class="c-datepicker-date-editor  J-datepicker-range-day"> -->
+						<label for="exampleInputEmail2">动态发布时间:</label>
+						<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day">
+							<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+							<input placeholder="开始日期" name=""
+								class="c-datepicker-data-input only-date dynamicbeginDateLine beginDateLine beginDate" value="">
+							<span class="c-datepicker-range-separator">至</span>
+							<input placeholder="结束日期" name=""
+								class="c-datepicker-data-input only-date dynamicendDateLine endDateLine endDate" value="">
+						</div>
+						<!-- </div> -->
+						<div style="display:inline">
+							<label for="exampleInputEmail2" style="padding-left: 10px;">脸影号:</label>
+							<input type="text" class="form-input userid" placeholder="请输入脸影号" style="min-width:146px;">
+						</div>
+						<div style="display:inline">
+							<label for="exampleInputEmail2" style="padding-left: 10px;">动态id:</label>
+							<input type="text" class="form-input dynamicid" id="exampleInputEmail2" placeholder="请输入动态id"
+								style="min-width:146px;">
+						</div>
+						<div style="display: inline-block; padding-left: 10px;">
+							<span style="font-weight:bold;">动态类型:</span>
+							<select name="type" class="type dynamicType" style="height: 37px;">
+								<option value="" class="item">所有</option>
+								<option value="1">文字</option>
+								<option value="2">图片</option>
+								<option value="3">视频</option>
+							</select>
+						</div>
+						<div style="display:inline-block;padding-left: 10px;" class="cityTypes">
+							<div data-toggle="distpicker" class="distpicker">
+								<span style="font-weight:bold;vertical-align: middle;">城市:</span>
+								<select data-province="---- 选择省 ----" class="province btn btn-default" style="margin-right: 5px; height: 37px; display: inline-block;"></select>
+								<select data-city="---- 选择市 ----" class="city btn btn-default cityType"style="height: 37px;" ></select>
+							</div>
+						</div>
+						<div class="btn btn-green checkapp" style="margin-left: 10px;">搜索</div>
+						<div class="btn btn-yellow rest" style="margin-left: 10px;">重置</div>
+					</form>
+					<div class="appuser" style="min-width:1600px;padding-bottom: 10px;">
+						<!-- 模板的坑 -->
+					</div>
+					<div id="pageTool" style="min-width:1600px;padding-left: 10px;"></div>
+					<div id="load"
+						style="display:none;width: 100%;height: 100%;position: absolute;top:0;left:0;z-index: 100000;min-width: 1200px;">
+						<div class="ball-clip-rotate-pulse" style="position:absolute;top:50%;left:50%;">
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- 发布动态的模态框 -->
+		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		id="createDynamicMadal">
+		<div class="modal-dialog" style="width: 1000px" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">新增动态</h4>
+					<div class="video" style="opacity:0;width: 0;height: 0;overflow: hidden;"></div>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="addDynamic">
+						<div class="form-group">
+							<label for="userid" class="col-sm-2 control-label">脸影号</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="userid" name="userid" autocomplete="off"
+									placeholder="请输入脸影号">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">动态内容</label>
+							<div class="col-sm-8">
+								<textarea style="resize:none;" name="message" id="message" class="form-control" cols="30" rows="5"
+									placeholder="请输入动态内容"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dynamicPower" class="col-sm-2 control-label">动态权限</label>
+							<div class="col-sm-8" style="padding-top: 7px;" id="dynamicPower">
+								<label for="status_one">
+									<input type="radio" value="1" name="status" checked style="margin-left: 5px;" id="status_one"> 所有人可见
+								</label>
+								<label for="status_two">
+									<input type="radio" value="2" name="status" style="margin-left: 5px;" id="status_two"> 仅好友可以见
+								</label>
+								<label for="status_three">
+									<input type="radio" value="3" name="status" style="margin-left: 5px;" id="status_three"> 仅自己可见
+								</label>
+							</div>
+						</div>
+						<div class="adders form-group" style="padding-left:5px;">
+							<label for="" class="col-sm-2 control-label">发布地址</label>
+							<div data-toggle="distpicker" class="distpicker col-sm-8" style="padding-top:4px;">
+								<select data-province="---- 选择省 ----" class="province  province-select btn btn-default"
+									name="proveince"></select>
+								<select data-city="---- 选择市 ----" class="city city-select btn btn-default" name="city"></select>
+								<select data-district="---- 选择区 ----" class="last btn btn-default" name="area"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control publishAdd" autocomplete="off" id="publishAdd" name="publishAdd"
+									placeholder="发布地址">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="likedCount" class="col-sm-2 control-label">点赞数</label>
+							<div class="col-sm-5">
+								<input type="text" id="likedCount" class="form-control" autocomplete="off" name="likedCount" value="0">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="readCount" class="col-sm-2 control-label">阅读数</label>
+							<div class="col-sm-5">
+								<input type="text" id="readCount" class="form-control" autocomplete="off" name="readCount" value="0">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="shareCount" class="col-sm-2 control-label">分享数</label>
+							<div class="col-sm-5">
+								<input type="text" id="shareCount" class="form-control" autocomplete="off" name="shareCount" value="0">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">上传图片</label>
+							<div class="col-sm-8">
+								<input type="file" style="opacity: 0;" class="upload-input" id="file-upload" multiple>
+								<div id="upload">
+									<div class="upload-items upload-btn">
+										<i class="iconfont icon-shangchuan1"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2"></div>
+							<div class="selectImg col-sm-8" style="overflow:hidden;"></div>
+						</div>
+						<div class="form-group">
+							<img src="../img/logoup.png" alt="" style="display:none;width: 31px; height: 17px;" class="icon">
+							<img src="../img/logobottom.png" alt="" style="display:none;width: 31px; height: 17px;" class="icon2">
+							<img src="../img/logoleft.png" alt="" style="display:none;width: 31px; height: 17px;" class="icon3">
+							<img src="../img/logoright.png" alt="" style="display:none;width: 31px; height: 17px;" class="icon4">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary dynamicPublish">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 提示用户的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="tips">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 管理用户没有数据的模板 -->
+	<script type="text/html" id="no-data">
+		<div class="btns">
+				<div>
+						{{ if data[3010106]}}
+							<button class="btn btn-defalut btn-sm btn-green add-dynamic">新增动态</button>
+						{{ /if }}
+						{{ if  data[3010102] }}
+							<button class="btn btn-defalut btn-sm btn-blue check-dynamic">详情</button>
+						{{ /if }}
+						{{ if  data[3010103] }}
+							<button class="btn btn-defalut btn-sm btn-warning change-count">修改</button>
+						{{ /if }}
+						{{ if  data[3010104] }}
+							<button class="btn btn-defalut btn-sm btn-red delete-dynamic">删除</button>
+						{{ /if }}
+						<div style="padding-top: 10px;display: inline-block; padding-left: 10px;">
+							<span class="newdynamic">今日新增动态: {{ data.todayDynamicCount }}</span>
+						</div>
+					</div>
+
+				</div>
+				<table class="table table-hover table-condensed" id="table">
+            <thead>
+                <tr>
+									<th width="40"></th>
+									<th>序号</th>
+										<th >脸影号</th>
+										<th>动态id</th>
+                    <th>头像</th>
+										<th width="100">昵称</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th width="100">动态信息</th>
+                    <th width="180">创建时间</th>
+                    <th width="80">动态类型</th>
+                    <th width="80">动态权限</th>
+										<th width="100">真实地址</th>
+										<th width="100">发布地址</th>
+                    <th width="500">动态内容</th>
+                    <th>点赞数</th>
+                    <th>分享数</th>
+										<th>阅读数</th>
+										<th>评论数</th>
+										<th>发布人</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+									<td colspan="20">没有数据</td>
+								</tr>
+            </tbody>
+        </table>
+	</script>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 这里是动态详情的弹出的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="commentDetails">
+		<div class="modal-dialog" role="document" style="width: 1000px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">动态详情</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 这里是渲染模板的坑 -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+    </script>
+	<!-- 推荐动态的提示框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="recommended-tips">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					<p>是否推荐该条动态</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary btn-recommended">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="update-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改动态</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal change-count" id="change-count-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">动态Id:</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control update-dynamicId" placeholder="动态Id" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">点赞数:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control update-likedCount" name="likedCount" placeholder="点赞数">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">阅读数:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control update-readCount" placeholder="阅读数" name="readCount">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">分享数:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control update-shareCount" placeholder="分享数" name="shareCount">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary update-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 提示的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="del-tips">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					是否删除这条动态
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+						<button type="button" class="btn btn-primary yes">是</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 当登录的用户是超级管理员和管理员时渲染的模板 -->
+		<script type="text/html" id="tmp-super">
+				<div class="btns">
+						<div>
+							{{ if data[3010106]}}
+								<button class="btn btn-defalut btn-sm btn-green add-dynamic">新增动态</button>
+							{{ /if }}
+							{{ if  data[3010102] }}
+								<button class="btn btn-defalut btn-sm btn-blue check-dynamic">详情</button>
+							{{ /if }}
+							{{ if  data[3010103] }}
+								<button class="btn btn-defalut btn-sm btn-warning change-count">修改</button>
+							{{ /if }}
+							{{ if  data[3010104] }}
+								<button class="btn btn-defalut btn-sm btn-red delete-dynamic">删除</button>
+							{{ /if }}
+							<div style="padding-top: 10px;display: inline-block; padding-left: 10px;">
+								<span class="newdynamic">今日新增动态: {{ data.todayDynamicCount }}</span>
+							</div>
+						</div>
+				</div>
+				<table class="table  table-hover table-condensed" id="table">
+            <thead>
+                <tr>
+									<th width="40">
+										<input type="checkbox" class="checked-all">
+									</th>
+									<th>序号</th>
+										<th >脸影号</th>
+										<th>动态id</th>
+                    <th>头像</th>
+										<th width="100">昵称</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th width="100">动态信息</th>
+                    <th width="180">创建时间</th>
+                    <th width="80">动态类型</th>
+                    <th width="80">动态权限</th>
+										<th width="100">真实地址</th>
+										<th width="100">发布地址</th>
+                    <th width="500">动态内容</th>
+                    <th>点赞数</th>
+                    <th>分享数</th>
+										<th>阅读数</th>
+										<th>评论数</th>
+										<th>发布人</th>
+										{{ if data[3010105] }}
+											<th>推荐</th>
+										{{ /if }}
+                </tr>
+            </thead>
+            <tbody>
+                {{each data.data as v index }}
+                <tr>
+									<td>
+										<input type="checkbox" class="check-item" name="item" data-id="{{ v.id }}" data-liked="{{v.likedCount}}" data-dynamicId="{{v.id}}" data-read="{{ v.readCount }}" data-share="{{ v.shareCount }}">
+									</td>
+									<td>{{index+1}}</td>
+										<td class="selectId">{{v.userId}}</td>
+										<td>{{v.id}}</td>
+                    <td>
+                    <div>
+                      <a href="{{v.headImg + '?x-oss-process=image/quality,q_60'}}" data-fancybox="{{i}}" data-caption="{{v.nickName + '的头像'}}">
+												<img src="{{ v.headImg + '?x-oss-process=image/quality,q_10'}}" alt="">
+											</a>
+                    </div>
+                    </td>
+                    <td>
+											<div class="message ">
+												<p class="text-ellipsis" style="-webkit-line-clamp:3;-moz-line-clamp:3;width:100px;" data-toggle="tooltip" data-placement="top" title="{{ v.nickName }}">{{ v.nickName }}</p>
+											</div>
+										</td>
+                    <td>{{if v.sex == 1}}男{{else if v.sex==2}}女{{/if}}</td>
+                    <td>{{v.age}}</td>
+                    <td>
+											<div class="message">
+												<p class="text-ellipsis" style="-webkit-line-clamp:3" data-toggle="tooltip" data-placement="top" title="{{ v.message }}">{{ v.message }}</p>
+											</div>
+										</td>
+                    <td class="time">{{v.createTime | timeFormat}}</td>
+                    <td>{{if v.dynamicType == 1}}文字 {{else if v.dynamicType == 2 }}图片{{else if v.dynamicType==3}}视频{{/if}}</td>
+                    <td>{{if v.type==1}}所有人可见{{else if v.type ==2}}好友可见{{else if v.type==3}}仅自己可见{{/if}}</td>
+										<td>
+												<div class="message">
+													<p class="text-ellipsis" style="-webkit-line-clamp:3;-moz-line-clamp:3" data-toggle="tooltip" data-placement="top" title="{{ v.realAddress }}">
+														{{ v.realAddress }}
+													</p>
+												</div>
+										</td>
+                    <td>
+												<div class="message ">
+													<p class="text-ellipsis" style="-webkit-line-clamp:3;-moz-line-clamp:3" data-toggle="tooltip" data-placement="top" title="{{v.localAddress}}">{{v.localAddress}}</p>
+												</div>
+										</td>
+                    <td>
+                            <div class="user-imgs" data-index="{{i}}" data-fancybox-group="gallery{{index}}" rel="group{{index}}">
+														 		 
+															<% if ( v.thumbnailImg != '' ) {%>
+                                            
+                                            <a href="{{v.photos[0]}}" class="fancybox{{index}}" data-fancybox="gallery{{index}}">
+																								<img  src="{{ v.thumbnailImg + '?x-oss-process=image/quality,q_10'}}" class="play"/>
+																								<img src="../img/play.svg" alt="" class="play btn-play">
+                                            </a>
+                                            <video src="{{ v.photos[0] }}" style="display:none;"></video>
+                                            
+                                            <%} else {%>
+                                                {{each v.photos as v i }}
+																								<a href="{{v + '?x-oss-process=image/quality,q_60'}}" class="fancybox" data-fancybox="fancybox{{index}}" data-fancybox-group="gallery{{index}}" rel="group" >
+																									<img src="{{v + '?x-oss-process=image/quality,q_10'}}" class="imgs" alt="">
+																								</a>
+                                                {{/each }}
+                                                <% }%>
+                            </div>
+                    </td>
+                    <td>{{v.likedCount}}</td>
+                    <td>{{v.shareCount}}</td>
+										<td>{{v.readCount}}</td>
+										<td>{{ v.commentCount }}</td>
+										<td>{{ v.userName }}</td>
+										{{ if data[3010105] }}
+											<td>
+												{{ if v.recommendFlag == 0 }}
+												<i class="iconfont recommend-btn icon-icon_tuijiannor" ids="{{ v.id }}"></i>
+												{{ else if v.recommendFlag == 1 }}
+												<i class="iconfont recommend-btn icon-iconkuozhan_tuijianpre" style="color: skyblue;"  ids="{{ v.id }}"></i>
+												{{ /if }}
+											</td>
+										{{ /if }}
+                </tr>
+								{{/each}}
+            </tbody>
+        </table>
+    </script>
+		<!-- 这里是动态详情的模态框的模板 -->
+		<script type="text/html" id="tmp-personal">
+        <div class="Personal-dynamics">
+                <div class="heade">
+                    <img src="{{data.headImg}}?x-oss-process=image/quality,q_10" alt="" class="heade-photo">
+                    <span class="nickname">{{ data.nickName }}</span>
+                </div>
+                <div class="details-content">
+                    <p class="messaage">{{ data.message }}</p>
+                    <div class="content-img" style="width:700px;">
+                        <!-- 这里显示的是用户的图片或者是视频的区域 -->
+                        {{each data.photos as v i }}
+                        <% if (v.substr(-4.4) == '.mp4') {%>
+                            <video src="{{ v }}" controls  style="width: 100%;height:400px;"></video>
+                            <%} else {%> 
+                                <a href="{{v + '?x-oss-process=image/quality,q_60'}}" class="fancybox" data-fancybox="group" data-fancybox-group="gallery" rel="group" >
+																		<img src="{{v + '?x-oss-process=image/quality,q_20'}}" class="imgs" alt="">
+																</a>
+                                <% } %>
+                        {{ /each }}
+                    </div>
+                </div>
+                <div class="dynamics">
+										<p>{{if data.localAddress}} <i class="iconfont icon-dingweixiao1"></i> {{data.localAddress}} {{/if}}</p>
+										<p class="count">
+											<i class="iconfont icon-yuedu"></i> <span>{{data.readCount}}</span>
+											<i class="iconfont icon-zan"></i> <span>{{data.likedCount}}</span>
+											<i class="iconfont icon-pinglun"></i> <span>{{data.commentCount}}</span>
+											<i class="iconfont icon-fenxiang"></i> <span>{{ data.shareCount }}</span>
+										</p>
+                </div>
+                <div class="comment">
+                    <!-- <div class="comment-photo">
+                        <img src="./2018100913120156949575035.png" alt=""> 这里是评论的内容
+                    </div> -->
+                </div>
+                <div class="btn-more btn-nothing">加载更多</div>
+            </div>
+  </script>
+		<!-- 这里是评论的模板 -->
+		<script type="text/html" id="temp-comment">
+        {{each data.data as v i}}
+        <div class="media Primarycomment">
+                <div class="media-left">
+                  <a href="#">
+                    <img class="media-object" src="{{v.headImg}}?x-oss-process=image/quality,q_10" alt="...">
+                  </a>
+                </div>
+                <div class="media-body">
+                        <h5 class="media-heading">{{v.nickName}}</h5>
+                    <p>
+                        {{v.message}} 
+                    </p>
+                    <p class="comment-icon">
+                        <i class="iconfont icon-zan"></i> {{ v.commentLikedCount}}
+                        <i class="iconfont icon-rili"></i> {{v.createTime | timeFormat}}
+                        <span class="del-comment color-red" data-id="{{v.id}}" data-dynamicid={{v.dynamicId}} data-index={{1}}><i class="iconfont icon-qingkong"></i> 删除</span>
+                    </p>
+                    <div class="reply">
+                        <div class="replys">
+                            {{ each v.info as v i}}
+                                <div class="reply-info" data-id="{{v.id}}">
+                                    <p>
+                                        <span class="text-weight">{{v.nickName}}</span> <span class="for-to">回复</span> <span class="text-weight bNickName">{{v.bNickName}}:</span><span>{{v.message}}</span>
+                                    </p>
+                                    <p class="comment-icon">
+                                        <i class="iconfont icon-zan"></i> {{ v. commentLikedCount }}
+                                        <i class="iconfont icon-rili"></i> {{v.createTime | timeFormat}}
+                                        <span class="del-comment color-red" data-dynamicid={{v.dynamicId}}  data-id="{{v.id}}" data-index="{{2}}"><i class="iconfont icon-qingkong"></i> 删除</span>
+                                    </p>
+                                </div>
+                            {{ /each }}
+                        </div>
+                        {{if v.info }}
+                        <p class="reply-more" data-pagenum="1" data-id="{{v.id}}">
+                                查看更多回复 >
+                        </p>
+                        {{/if}}
+                    </div>
+                </div>
+              </div>
+        {{/each}}
+		</script>
+
+
+		<!-- 这里是二级评论的渲染模板 -->
+		<script type="text/html" id="tmp-reply-two">
+        {{ each data.data as v i}}
+            <div class="reply-info" data-id="{{v.id}}">
+                <p>
+                   <span class="text-weight">{{v.nickName}}</span> <span class="for-to">回复</span> <span class="text-weight bNickName">{{v.bNickName}}:</span><span>{{v.message}}</span>
+                </p>
+                <p class="comment-icon">
+                    <i class="iconfont icon-zan"></i> {{ v.commentLikedCount }}
+                    <i class="iconfont icon-rili"></i> {{v.createTime | timeFormat}}
+                    <span class="del-comment  color-red" data-id="{{v.id}}" data-dynamicid="{{v.dynamicId}}" data-index="{{2}}"><i class="iconfont icon-qingkong"></i> 删除</span>
+                </p>
+            </div>
+        {{ /each }}
+    </script>
+		<!-- 这里是管理员查看动态详情的模板 -->
+		<script type="text/html" id="temp-comment1">
+        {{each data.data as v i}}
+        <div class="media Primarycomment">
+                <div class="media-left">
+                  <a href="#">
+                    <img class="media-object" src="{{v.headImg}}" alt="...">
+                  </a>
+                </div>
+                <div class="media-body">
+                        <h5 class="media-heading">{{v.nickName}}</h5>
+                    <p>
+                        {{v.message}} 
+                    </p>
+                    <p class="comment-icon">
+                        <i class="iconfont icon-zan"></i> {{ v.commentLikedCount }}
+                        <i class="iconfont icon-rili"></i> {{v.createTime | timeFormat}}
+                    </p>
+                    <div class="reply">
+                        <div class="replys">
+                            {{ each v.info as v i}}
+                                <div class="reply-info" data-id="{{v.id}}">
+                                    <p>
+                                        <span class="text-weight">{{v.nickName}}:</span> <span>{{v.message}}</span>
+                                    </p>
+                                    <p class="comment-icon">
+                                        <i class="iconfont icon-zan"></i> {{ v.commentLikedCount }}
+                                        <i class="iconfont icon-rili"></i> {{v.createTime | timeFormat}}
+                                    </p>
+                                </div>
+                            {{ /each }}
+                        </div>
+                        {{if v.info }}
+                        <p class="reply-more" data-pagenum="1" data-id="{{v.id}}">
+                                查看更多回复 >
+                        </p>
+                        {{/if}}
+                    </div>
+                </div>
+              </div>
+        {{/each}}
+    </script>
+			<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 301}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 301 }}
+										{{ if item.menuId == 30101}}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 30101}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 301 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+
+		<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+		<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+		<script src="../js/lib/moment.js"></script>
+		<script src="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.js"></script>
+		<script src="../js/lib/template-web.js"></script>
+		<script src="../js/lib/nprogress.js"></script>
+		<script src="../js/lib/query.js"></script>
+		<script src="../js/lib/datepicker.all.min.js"></script>
+		<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+		<script src="../js/paging.js"></script>
+		<script src="../js/exif.js"></script>
+		<script src="../js/lib/md5.min.js"></script>
+		<script src="../js/message.min.js"></script>
+		<script src="../js/distpicker-master/dist/distpicker.js"></script>
+		<script src="../js/src/comment.js"></script>
+		<script src="../js/src/appUser.js"></script>
+</body>
+
+</html>

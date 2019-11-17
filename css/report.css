@@ -1,0 +1,143 @@
+.select{
+	padding: 10px 20px;
+	background-color: #fff;
+	border-radius: 4px;
+	border-bottom: 1px solid #ccc;
+	height: 59px;
+}
+.select > select {
+	/* margin: 0 20px; */
+	margin-right: 10px;
+  padding: 0 5px;
+  height: 34px;
+  border: 1px solid #ccc;
+	background-color: #fff;
+	height: 37px;
+}
+.modal-details {
+  font-size: 12px;
+}
+.modal-details .modal-details-heade {
+  overflow: hidden;
+}
+.modal-details .modal-details-heade > div {
+  float: left;
+}
+.modal-details .modal-details-heade img {
+  height: 100px;
+  width: 100px;
+  border-radius: 10px;
+}
+.modal-details .pohot-heade {
+  width: 100px;
+  height: 100px;
+}
+.modal-details .comment {
+  width: 234px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 5px;
+}
+.modal-details .border {
+  width: 284px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 2px;
+}
+.modal-details .list {
+  margin: 0;
+}
+.modal-details .list > li {
+  float: left;
+  width: 284px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.modal-details .photoWall img {
+  width: 100px;
+  height: 100px;
+  display: inline;
+  margin: 5px;
+  border-radius: 4px;
+}
+.Personal-dynamics .heade-photo {
+  display: inline;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.Personal-dynamics .nickname {
+  margin-left: 10px;
+  font-size: 18px;
+}
+.Personal-dynamics .dynamics {
+  padding: 10px 64px;
+  border-bottom: 2px solid #ccc;
+}
+.Personal-dynamics .details-content {
+  margin: 10px 0;
+  margin-left: 64px;
+}
+.Personal-dynamics .details-content .content-img {
+  width: 620px;
+}
+.Personal-dynamics .details-content img {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  padding-top: 5px;
+  border-radius: 4px;
+}
+.Personal-dynamics .comment {
+  padding-top: 10px;
+  margin: 0 32px;
+}
+.Personal-dynamics .comment .media {
+  margin-top: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.Personal-dynamics .comment .media-left img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.Personal-dynamics .comment .media-body > p {
+  margin: 0;
+}
+.Personal-dynamics .comment .media-body .reply {
+  padding-left: 15px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+.Personal-dynamics .comment .media-body .comment-icon {
+  font-size: 12px;
+}
+.Personal-dynamics .reply-info {
+  padding-top: 10px;
+}
+.Personal-dynamics .reply-info > p:nth-child(1) {
+  margin: 0;
+}
+.Personal-dynamics .btn-more,
+.Personal-dynamics .btn-nothing {
+  text-align: center;
+  margin: 5px 0;
+}
+.Personal-dynamics .text-del {
+  cursor: pointer;
+}
+.Personal-dynamics .count {
+  font-size: 14px;
+}
+.icon-hover:hover {
+  color: #F56C65;
+}
+.report-info{
+	padding: 10px 20px;
+	background-color: #fff;
+}

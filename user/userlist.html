@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/userlist.css">
+</head>
+
+<body>
+	<div class="loading" id="loading" style="display:none;">
+		<div class="loading-item">
+			<div class="donut"></div>
+			<p>正在发布</p>
+		</div>
+	</div>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width:1400px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">APP管理</li>
+						<li>用户列表</li>
+					</ol>
+					<form class="selecttime form-inline margin10" style="min-width:1400px">
+						<!-- <div class="c-datepicker-date-editor  J-datepicker-range-day"> -->
+						<label>注册日期:</label>
+						<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day selectTime1">
+							<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+							<input placeholder="开始日期" name=""
+								class="c-datepicker-data-input only-date dynamicbeginDateLine beginDateLine beginDate" value="">
+							<span class="c-datepicker-range-separator">至</span>
+							<input placeholder="结束日期" name=""
+								class="c-datepicker-data-input only-date dynamicendDateLine endDateLine endDate" value="">
+						</div>
+						<!-- </div> -->
+						<div style="display:inline; margin-right: 10px;">
+							<label for="exampleInputEmail2" style="padding-left: 10px;">关键字:</label>
+							<input type="text" class="form-input keyworld" placeholder="脸影号、手机号、昵称" style="min-width:146px; height: 37px;">
+						</div>
+						<div class="btn  checkapp btn-green" style="margin-right: 10px;">搜索</div>
+						<div class="btn btn-default rest btn-yellow">重置</div>
+					</form>
+					<div class="userList margin10" style="min-width:1400px;">
+						<!-- 坑 -->
+					</div>
+					<div id="pageTool" style="min-width:1400px"></div>
+					<!-- loading动画 -->
+					<div id="load" style="display:none;width: 100%;height: 100%;position: absolute;top:0;left:0;z-index: 100000;">
+						<div class="ball-clip-rotate-pulse" style="position:absolute;top:50%;left:50%;">
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+				{{ each data as v i }}
+					<li>
+						<div class="drop-title {{ if i == 0}} shouye {{ /if }} " >
+							<i class="iconfont {{ v.icon }}"></i>
+							{{if i == 0 }} 
+								<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+							{{else if i != 0}}
+								<span>{{ v.menuName }}</span>
+							{{ /if }}
+						</div>
+						{{ if v.children != ''}}
+								<div class="drop-list {{if v.menuId != 201 }} active{{ /if }} ">
+									<ul>
+										{{each v.children as item index}}
+											{{ if v.menuId == 201 }}
+													{{ if item.menuId == 20101}}
+														<li class="before-page">{{ item.menuName }}</li>
+													{{ else if item.menuId != 20101}}
+														<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+													{{ /if }}
+											{{ else if v.menuId != 201 }}
+												<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+											{{ /if }}
+										{{ /each }}
+									</ul>
+								</div>
+						{{ /if }}
+					</li>
+				{{ /each }}
+			</ol>
+	</script>
+	<!-- 没有数据的模板 -->
+	<script type="text/html" id="no-data">
+		<table class="table table-hover" id="table">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>脸影号</th>
+									<th>头像</th>
+									<th>昵称</th>
+									<th>手机号</th>
+									<th>性别</th>
+									<th>年龄</th>
+									<!-- <th>登录渠道</th> -->
+									<th>是否完善</th>
+									<th>注册时间</th>
+									<th>最近登录时间</th>
+									<th>登录设备</th>
+									<th>上传通讯录</th>
+									<th>状态</th>
+									<th>邀请码</th>
+									<th>APP版本</th>
+									<!-- <th>IP</th> -->
+									<th>位置</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+									<tr>
+										<td colspan="18">没有数据</td>
+									</tr>
+							</tbody>
+						</table>
+	</script>
+	<!-- 显示真实用户详情的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="details-user">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">用户详情</h4>
+				</div>
+				<div class="modal-body">
+					<!-- <p>One fine body&hellip;</p> -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 对应要用户详情的模板 -->
+	<script type="text/html" id="tmp-appdeatils">
+					<form class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-2 col-xs-2 control-label">头像:</label>
+					<div class="col-sm-10 col-xs-10">
+						<img src="{{data.headImg +'?x-oss-process=image/quality,q_10' }}" alt="" class="change-headImg" style="width:50px;height:50px;border-radius:50%;">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 col-xs-2 control-label">脸影号:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ data.userId }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nickName" class="col-sm-2 col-xs-2 control-label">昵称:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ data.nickName }}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6">
+						<label for="birthdate" class="col-sm-4 col-xs-4 control-label">出生日期:</label>
+							<div class="col-sm-7 col-xs-7" style="line-height:32px;">
+								{{ data.birthdate | timeFormat1 }}
+							</div>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<label class="col-sm-4 col-xs-4 control-label">注册日期:</label>
+						<div claass="col-sm-7 col-xs-7" style="line-height:32px;">{{ data.registerTime | timeFormat }}</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6">
+						<label class="col-sm-4 col-xs-4 control-label">年龄:</label>
+						<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+								{{ data.age }}
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<label class="col-sm-4 col-xs-4 control-label">星座:</label>
+						<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+								{{ data.constellation }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6">
+						<label class="col-sm-4 col-xs-4 control-label">性别:</label>
+					<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ if  data.sex == 1 }} 男 {{ else if data.sex == 2 }} 女 {{ /if }}
+					</div>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<label class="control-label col-sm-4 col-xs-4">注册渠道:</label>
+						<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+							{{ if data.registerChannel == 1 }} IOS {{ else if data.registerChannel == 2}} Android {{ /if }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-xs-2">居住地:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ data.liveplace }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="birthplace" class="col-sm-2 col-xs-2 control-label">出生地:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ data.birthplace }}
+					</div>
+				</div>
+				<div class='form-group'>
+					<div class='col-sm-6 col-xs-6'>
+						<label class="col-sm-4 col-xs-4 control-label">动态数:</label>
+							<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+									{{ data.dynamicCount }}
+							</div>
+					</div>
+					<div class='col-sm-6 col-xs-6'>
+						<label class="col-sm-4 col-xs-4 control-label">粉丝数:</label>
+							<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+									{{ data.fansCount }}
+							</div>
+					</div>
+				</div>
+				<div class='form-group'>
+					<div class='col-sm-6 col-xs-6'>
+						<label class="col-sm-4 col-xs-4 control-label">关注数:</label>
+							<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+									{{ data.followCount }}
+							</div>
+					</div>
+					<div class='col-sm-6 col-xs-6'>
+						<label class="col-sm-4 col-xs-4 control-label">好友数:</label>
+							<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+									{{ data.friendsCount }}
+							</div>
+					</div>
+				</div>
+				<div class='form-group'>
+					<div class='col-sm-6 col-xs-6'>
+						<label class="col-sm-4 col-xs-4 control-label">点赞数:</label>
+							<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+									{{ data.likedCount }}
+							</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="individualResume" class="col-sm-2 col-xs-2 control-label">个性签名:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ data.individualResume }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="emotion" class="col-sm-2 col-xs-2 control-label">情感状态:</label>
+					<div class="col-sm-10 col-xs-10" style="line-height:32px;">
+						{{ if data.emotion == 1 }} 保密 {{ else if data.emotion == 2 }} 单身 {{ else if data.emotion == 3 }} 恋爱中 {{ else if data.emotion == 4 }} 恋爱中，但保留交友空间 {{ else if data.emotion == 5 }} 多人恋爱中，比较复杂 {{ else if data.emotion == 6 }} 已订婚 {{ else if data.emotion == 7 }} 已婚 {{ else if data.emotion == 8 }} 有同居伴侣 {{ else if data.emotion == 9 }} 分居 {{ else if data.emotion == 10 }} 离异 {{ else if data.emotion == 11 }} 同性 {{ else if data.emotion == 12 }} 丧偶 {{ /if }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 col-xs-2 control-label">标签:</label>
+					<div class="col-sm-10 col-xs-10 userLabels" style="line-height:32px;">
+						{{ data.userLabel }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="profession" class="col-sm-2 col-xs-2 control-label">职业:</label>
+					<div class="col-sm-10 col-xs-10"  style="line-height:32px;">
+						{{ data.profession }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="bgImg" class="col-sm-2 col-xs-2 control-label">app背景图:</label>
+					<div class="col-sm-8 col-xs-8">
+						{{ if data.bgImg != ""}}
+						<a href=" {{ data.bgImg+ '?x-oss-process=image/quality,q_60' }}" rel="bg" data-fancybox="bg" >
+							<img src="{{ data.bgImg+ '?x-oss-process=image/quality,q_30' }} " alt="" class="bgImg change-bgImg" alt="" style="width:100%;height:250px;overflow:hidden;">
+						</a>
+						{{ /if }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 col-xs-2 control-label">照片墙:</label>
+					<div class="col-sm-10 col-xs-10">
+						<ul style="display:flex;">
+							{{ each data.photos as v i}}
+							<li class="user_info_item">
+								<div >
+									<a class="fancybox" data-fancybox="gallery" rel="group" href="{{ if v == null }}../img/bg.jpg{{else if v != ''}} {{v+'?x-oss-process=image/quality,q_60'}}  {{/if }}"><img src="{{ if v == null }}../img/bg.jpg{{else if v != ''}} {{v+'?x-oss-process=image/quality,q_20'}}  {{/if }}" style="width: 100px;height: 100px;border-radius: 4px;margin-left:5px;" alt="" /></a>
+								</div>
+							</li>
+							{{ /each }}
+						</ul>
+					</div>
+				</div>
+			</form>
+			</script>
+	<!-- 显示真实用户通讯路详情的莫模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="addressBook">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">通讯录详情</h4>
+				</div>
+				<div class="modal-body">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/html" id="adderssBooks">
+		{{each book as v i}}
+				<span>{{ v }}</span>
+		{{ /each }}
+	</script>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 0}} <span class="color-red"> 冻结</span> {{else if data.userStatus == 1}} 正常 {{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+	</script>
+	<!-- 用户列表的渲染模板 -->
+	<script type="text/html" id="tmp-userlist">
+		<table class="table table-hover" id="table">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>脸影号</th>
+									<th>头像</th>
+									<th>昵称</th>
+									<th>手机号</th>
+									<th>性别</th>
+									<th>年龄</th>
+									<!-- <th>登录渠道</th> -->
+									<th>是否完善</th>
+									<th>注册时间</th>
+									<th>最近登录时间</th>
+									<th>登录设备</th>
+									<th>上传通讯录</th>
+									<th>状态</th>
+									<th>邀请码</th>
+									<th>APP版本</th>
+									<!-- <th>IP</th> -->
+									<th>位置</th>
+									{{ if data[2010101] || data[2010103] }}
+										<th>操作</th>
+									{{ /if }}
+								</tr>
+							</thead>
+							<tbody>
+								{{ each data.data as v i}}
+									<tr>
+										<td>{{ i+1 }}</td>
+										<td>{{ v.userId }}</td>
+										<td> 
+											<a href="{{v.headImg + '?x-oss-process=image/quality,q_60'}}" data-fancybox="{{i}}" data-caption="{{v.nickName + '的头像'}}">
+												<img src="{{ v.headImg + '?x-oss-process=image/quality,q_10'}}" alt="">
+											</a>
+										</td>
+										<td>{{ v.nickName }}</td>
+										<td>{{ v.mobile }}</td>
+										<td>{{ if v.sex == 1 }} 男 {{ else if v.sex == 2 }} 女 {{ /if }}</td>
+										<td>{{ v.age }}</td>
+										<td>{{if v.isImprove == 0}}未完善{{else if v.isImprove == 1}}完善中{{else v.isImprove ==2}}已完善{{/if}}</td>
+										<!-- <td>{{ if v.loginChannel == 1}} IOS {{ else if v.loginChannel == 2 }} Android {{ /if }}</td> -->
+										<td>{{ v.registerTime | timeFormat}}</td>
+										<td>{{ v.loginTime | timeFormat}}</td>
+										<td>{{ v.loginDevice }} {{ v.systemVersion }}</td>
+										<td>
+											{{ if v.isUploadAddressBook == 0 }} 
+													否
+												{{ else if v.isUploadAddressBook == 1 }} 
+													是
+													{{ if data[2010102] }}
+														<i class="iconfont addressbook icon-tongxunlu" data-arr="{{ v.addressBook }}" ></i> 
+													{{ /if }}
+											{{ /if }}
+										</td>
+										<td>{{ if v.userStatus == 0 }} <span class="color-red"> 冻结</span> {{ else if v.userStatus ==  1 }} 正常 {{ /if }}</td>
+										<td>{{ v.invitationCode }}</td>
+										<td>{{ v.appVersion }}</td>
+										<!-- <td>{{ v.loginIp }}</td> -->
+										<td>
+											<div style="width: 140px;">
+												{{ v.address }}
+											</div>
+										</td>
+										{{ if data[2010101] || data[2010103] }}
+											<td>
+												{{ if data[2010101] }}
+													<button class="btn btn-sm btn-blue details-user" data-userId="{{ v.userId }}">详情</button>
+												{{ /if }}
+												{{ if data[2010105] }}
+													<button class="btn btn-sm btn-yellow change-user" data-userId="{{ v.userId }}">修改</button>
+												{{ /if }}
+												{{ if data[2010103] }}
+														{{ if v.userStatus == 0}}
+															<button class="btn btn-sm btn-yellow unlock-user" data-userId="{{ v.userId }}">解封</button>
+														{{ /if }}
+														{{ if v.userStatus == 1}}
+															<button class="btn btn-sm btn-red freeze-user" data-userId="{{ v.userId }}">冻结</button>
+														{{ /if }}
+												{{ /if }}
+											</td>
+										{{ /if }}
+									</tr>
+								{{ /each }}
+							</tbody>
+						</table>
+	</script>
+	<!-- 删除提示 -->
+	<div class="modal fade" tabindex="-1" id="del-tips" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					是否冻结该用户
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary btn-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改用户的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="change-info-modal">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content  ">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改信息</h4>
+				</div>
+				<div class="modal-body">
+					这里是渲染机器人用户的信息 是可以修改的
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary change-info-yes">修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改真实用户详情的渲染模板 -->
+	<script type="text/html" id="tmp-info-details">
+		<form class="form-horizontal" class="changeinfo-form" id="changeinfo-form">
+	<div class="form-group">
+		<label class="col-sm-2 col-xs-2 control-label">头像:</label>
+		<div class="col-sm-8 col-xs-8">
+			<img src="{{data.headImg +'?x-oss-process=image/quality,q_10' }}" alt="" class="change-headImg" style="width:50px;height:50px;border-radius:50%;">
+			<input type="file" style="opacity: 0"  accept="image/*" class="change-headImg-input">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 col-xs-2 control-label">脸影号:</label>
+		<div class="col-sm-8 col-xs-8">
+			<input type="email" class="form-control" id="userId" disabled="disabled" autocomplete="off" placeholder="脸影号" value="{{ data.userId }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="nickName" class="col-sm-2 col-xs-2 control-label">昵称:</label>
+		<div class="col-sm-8 col-xs-8">
+			<input type="text" id="nickName" name="nickName" class="form-control" autocomplete="off" placeholder="用户昵称" value="{{ data.nickName }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-6 col-sm-6">
+			<label for="birthdate" class="col-sm-4 col-xs-4 control-label">出生日期:</label>
+				<div class="col-sm-7 col-xs-7" style="margin-left: -4px; line-height: 32px;">
+					{{ data.birthdate | timeFormat1 }}
+				</div>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<label class="col-sm-4 col-xs-4 control-label">注册日期:</label>
+			<div claass="col-sm-7 col-xs-7" style="line-height:32px;">{{ data.registerTime | timeFormat }}</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-6 col-sm-6">
+			<label class="col-sm-4 col-xs-4 control-label">年龄:</label>
+			<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+					{{ data.age }}
+			</div>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<label class="col-sm-4 col-xs-4 control-label">星座:</label>
+			<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+					{{ data.constellation }}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-6 col-sm-6">
+			<label class="col-sm-4 col-xs-4 control-label">性别:</label>
+		<div class="col-sm-8 col-xs-8">
+			<label for="man" class="radio-inline">
+				<input type="radio" disabled="disabled" id="man" name="sexs" {{ if data.sex == 1 }}checked{{ /if }} value="1" style="margin-right:5px;">男
+			</label>
+			<label for="woman" class="radio-inline">
+				<input type="radio" disabled="disabled" id="woman" name="sexs" {{ if data.sex == 2 }}checked{{ /if }} value="2" style="margin-right:5px;">女
+			</label>
+		</div>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<label class="control-label col-sm-4 col-xs-4">注册渠道:</label>
+			<div class="col-sm-8 col-xs-8">
+				<label for="ios" class="radio-inline">
+					<input type="radio" id="ios" name="registerChannel" {{ if data.registerChannel == 1 }} checked {{ /if }} value='1' style="margin-right:5px;" disabled>IOS
+				</label>
+				<label for="android" class="radio-inline">
+					<input type="radio" id="android" name="registerChannel" {{ if data.registerChannel == 2 }} checked{{ /if }} value='2' style="margin-right:5px;" disabled>安卓
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-2 col-xs-2">居住地:</label>
+		<div class="col-sm-8 col-xs-8">
+			{{ data.liveplace }}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="birthplace" class="col-sm-2 col-xs-2 control-label">出生地:</label>
+		<div class="col-sm-8 col-xs-8">
+			{{ data.birthplace }}
+		</div>
+	</div>
+	<div class='form-group'>
+		<div class='col-sm-6 col-xs-6'>
+			<label class="col-sm-4 col-xs-4 control-label">动态数:</label>
+				<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ data.dynamicCount }}
+				</div>
+		</div>
+		<div class='col-sm-6 col-xs-6'>
+			<label class="col-sm-4 col-xs-4 control-label">粉丝数:</label>
+				<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ data.fansCount }}
+				</div>
+		</div>
+	</div>
+	<div class='form-group'>
+		<div class='col-sm-6 col-xs-6'>
+			<label class="col-sm-4 col-xs-4 control-label">关注数:</label>
+				<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ data.followCount }}
+				</div>
+		</div>
+		<div class='col-sm-6 col-xs-6'>
+			<label class="col-sm-4 col-xs-4 control-label">好友数:</label>
+				<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ data.friendsCount }}
+				</div>
+		</div>
+	</div>
+	<div class='form-group'>
+		<div class='col-sm-6 col-xs-6'>
+			<label class="col-sm-4 col-xs-4 control-label">点赞数:</label>
+				<div class="col-sm-8 col-xs-8" style="line-height:32px;">
+						{{ data.likedCount }}
+				</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="individualResume" class="col-sm-2 col-xs-2 control-label">个性签名:</label>
+		<div class="col-sm-8 col-xs-8">
+			<input type="text" id="individualResume" autocomplete="off" name="individualResume" class="form-control" placeholder="个性签名" value="{{ data.individualResume }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="emotion" class="col-sm-2 col-xs-2 control-label">情感状态:</label>
+		<div class="col-sm-8 col-xs-8" id="emotions" emotion="{{ data.emotion }}">
+			<select name="emotion" id="emotion" class="form-control" disabled="disabled">
+				<option value="1" {{ if data.emotion == 1 }} selected {{ /if }}>保密</option>
+				<option value="2" {{ if data.emotion == 2 }} selected {{ /if }}>单身</option>
+				<option value="3" {{ if data.emotion == 3 }} selected {{ /if }}>恋爱中</option>
+				<option value="4" {{ if data.emotion == 4 }} selected {{ /if }}>恋爱中，但保留交友空间</option>
+				<option value="5" {{ if data.emotion == 5 }} selected {{ /if }}>多人恋爱中，比较复杂</option>
+				<option value="6" {{ if data.emotion == 6 }} selected {{ /if }}>已订婚</option>
+				<option value="7" {{ if data.emotion == 7 }} selected {{ /if }}>已婚</option>
+				<option value="8" {{ if data.emotion == 8 }} selected {{ /if }}>有同居伴侣</option>
+				<option value="9" {{ if data.emotion == 9 }} selected {{ /if }}>分居</option>
+				<option value="10"{{ if data.emotion == 10 }} selected {{ /if }}>离异</option>
+				<option value="11"{{ if data.emotion == 11 }} selected {{ /if }}>同性</option>
+				<option value="12"{{ if data.emotion == 12 }} selected {{ /if }}>丧偶</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 col-xs-2 control-label">标签:</label>
+		<div class="col-sm-8 col-xs-8 userLabels">
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("萌萌哒")}} checked {{ /if }} name="userLabels" value="萌萌哒">萌萌哒
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("女友永远是对的")}} checked {{ /if }} name="userLabels" value="女友永远是对的">女友永远是对的
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("长发及腰")}} checked {{ /if }} name="userLabels" value="长发及腰">长发及腰
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("吃货")}} checked {{ /if }} name="userLabels" value="吃货">吃货
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("文艺")}} checked {{ /if }} name="userLabels" value="文艺">文艺
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("善解人意")}} checked {{ /if }} name="userLabels" value="善解人意">善解人意
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("强迫症")}} checked {{ /if }} name="userLabels" value="强迫症">强迫症
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("拖延症")}} checked {{ /if }} name="userLabels" value="拖延症">拖延症
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("宅")}} checked {{ /if }} name="userLabels" value="宅">宅
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("马甲线")}} checked {{ /if }} name="userLabels" value="马甲线">马甲线
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("大叔控")}} checked {{ /if }} name="userLabels" value="大叔控">大叔控
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("小清新")}} checked {{ /if }} name="userLabels" value="小清新">小清新
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("逗比")}} checked {{ /if }} name="userLabels" value="逗比">逗比
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("优雅")}} checked {{ /if }} name="userLabels" value="优雅">优雅
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("铲屎官")}} checked {{ /if }} name="userLabels" value="铲屎官">铲屎官
+			</label>
+			<label class="radio-inline">
+				<input type="checkbox" {{ if data.userLabel.includes("佛系")}} checked {{ /if }} name="userLabels" value="佛系">佛系
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="profession" class="col-sm-2 col-xs-2 control-label">职业:</label>
+		<div class="col-sm-8 col-xs-8">
+			<input type="text" name="changeprofession" id="profession"  autocomplete="off" class="form-control" placeholder="用户职业" value="{{ data.profession }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="bgImg" class="col-sm-2 col-xs-2 control-label">app背景图:</label>
+		<div class="col-sm-8 col-xs-8 change_bgImage">
+			{{ if data.bgImg == ''}}
+				<div class="bgImg change-bgImg" style="width:100%;height:250px;text-align:center;overflow:hidden;border: 1px solid #ccc;" data-name="div">
+						<div style="margin-top:100px;">
+							<i class="iconfont icon-ziyuan" style="font-size:30px;text-align:center;position: static;margin-top:40px;"></i>
+							<p>选择您需要上传的图片</p>
+						</div>
+				</div>
+			{{ else if v != ''}}
+				<img src="{{ data.bgImg+ '?x-oss-process=image/quality,q_30' }}" alt="" class="bgImg change-bgImg" alt="" style="width:100%;height:250px;overflow:hidden;">
+				<i class="iconfont icon-guanbishixin"></i>
+			{{ /if }}
+			<input type="file" name="bgImg" style="opacity:0;" accept="image/*" class="change-bgImg-input">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="" class="col-sm-2 col-xs-2 control-label">照片墙:</label>
+		<div class="col-sm-8 col-xs-8">
+			<ul style="display:flex;">
+				{{ each data.photos as v i}}
+				<li class="user_info_item" >
+					<div>
+						<img src="{{ if v == null }} ../img/logo1.png {{else if v != ''}} {{v+'?x-oss-process=image/quality,q_20'}}  {{/if }}" alt="" >
+						<input type="file"  accept="image/*" style="display:none;" data-index="{{i+1}}" data-v="{{ v }}">
+						<i class="iconfont icon-guanbishixin del-info-img" ></i>
+					</div>
+				</li>
+				{{ /each }}
+			</ul>
+		</div>
+	</div>
+</form>
+</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+	<script src="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/distpicker-master/dist/distpicker.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/src/radomNickName.js"></script>
+	<script src="../js/src/radomSign.js"></script>
+	<script src="../js/exif.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/userlist.js"></script>
+</body>
+
+</html>

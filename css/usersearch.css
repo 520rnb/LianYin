@@ -1,0 +1,146 @@
+.userSearch {
+	background-color: #fff;
+	padding: 10px 20px;
+	margin: 10px;
+	height: 59px;
+	vertical-align: middle;
+}
+.userSearch > input {
+  width: 500px;
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	/* cursor: pointer; */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.btn {
+  border: 1px solid #ccc;
+}
+.search-info {
+	padding: 20px 20px;
+	background-color: #fff;
+}
+.table{
+	margin-bottom: 0px;
+}
+.search-info img {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+}
+.modal-details {
+  font-size: 12px;
+}
+.modal-details .modal-details-heade {
+  overflow: hidden;
+}
+.modal-details .modal-details-heade > div {
+  float: left;
+}
+.modal-details .modal-details-heade img {
+  height: 100px;
+  width: 100px;
+  border-radius: 10px;
+}
+.modal-details .pohot-heade {
+  width: 100px;
+  height: 100px;
+}
+.modal-details .comment {
+  width: 234px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 5px;
+}
+.modal-details .border {
+  width: 284px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 2px;
+}
+.modal-details .list {
+  margin: 0;
+}
+.modal-details .list > li {
+  float: left;
+  width: 284px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.modal-details .photoWall {
+  position: relative;
+}
+.modal-details .photoWall img {
+  width: 100px;
+  height: 100px;
+  display: inline;
+  margin: 5px;
+}
+#pageTool1 {
+	background-color: #fff;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	margin: 0 10px;
+}
+#pageTool1 ul{
+	margin: 0;
+}
+/* 修改用户的信息的莫泰框的样式 */
+.user_info_item {
+	float: left;
+	margin: 3px;
+}
+.user_info_item > div{
+	position: relative;
+	width: 100px;
+	height: 100px;
+}
+.user_info_item img {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.user_info_item {
+	position: relative;
+}
+.user_info_item input {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.user_info_item .iconfont {
+	/* color: red; */
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+}
+.change_bgImage .iconfont {
+	/* color: red; */
+	position: absolute;
+	top: 0;
+	right: 15px;
+	cursor: pointer;
+}

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/releasepush.css">
+</head>
+
+<body>
+	<div class="suspension" style="display:none;">
+		<p class="Banned">禁言</p>
+	</div>
+	<div class="main">
+		<header>
+			<div class="left">
+			</div>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width: 1300px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">推送相关</li>
+						<li>发布推送</li>
+					</ol>
+					<div class="releasepush" style="min-width: 1300px;">
+						<div class="show-phone android">
+							<img src="" class="bg" alt="">
+							<div>
+								<img src="../img/logo.png" alt="">
+								<div>
+									<p class="phone-title">通知标题</p>
+									<p class="phone-content">您当前选择的是Android默认样式</p>
+								</div>
+							</div>
+						</div>
+						<div class="show-phone iphone">
+							<div>
+								<div>
+									<p class="phone-title">通知标题</p>
+									<p class="phone-content">您当前选择的是Iphone默认样式</p>
+								</div>
+								<img src="../img/logo.png" alt="">
+							</div>
+						</div>
+						<!-- 目标平台 -->
+						<div class="target">
+							<h2>目标平台</h2>
+							<div class="items" style="border-radius: 4px;">
+								<div class="item android" select="1">
+									<!-- <img src="" alt=""> -->
+									<i class="iconfont icon-anzhuo"></i>
+									<p>Android</p>
+								</div>
+								<div class="item ios" select='1'>
+									<!-- <img src="" alt=""> -->
+									<i class="iconfont icon-iconziti48"></i>
+									<p>IOS</p>
+								</div>
+							</div>
+							<span class=" tips" style="font-size: 12px;margin-left: 10px;display: none; color: #a94442;">至少选择一个平台</span>
+						</div>
+						<!-- 透传内容 -->
+						<div class="through-content">
+							<h2>透传内容</h2>
+							<form class="form-horizontal" id="form-content">
+								<div class="form-group">
+									<!-- col-sm-2 col-sx-2 -->
+									<label for="message-title" class="col-sm-2 col-xs-2  control-label"><span class="color-red">*</span>标题</label>
+									<!-- class="col-sm-10 col-xs-10" -->
+									<div class="col-sm-10  col-xs-10">
+										<input type="text" class="form-control" name="title"
+											id="message-title" autocomplete="off" placeholder="请输入描述">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="message-content" class="col-sm-2 col-xs-2 control-label"><span
+											class="color-red">*</span>消息内容：</label>
+									<div class="col-sm-10 col-xs-10">
+										<textarea id="message-content" style="min-width: 400px" class="form-control" rows="3"
+											required="required" name="content" placeholder="请输入内容"></textarea>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- 目标选择 -->
+						<div class="select-target">
+							<h2>目标选择</h2>
+							<div class="select-user">
+								<div>
+									目标用户：
+								</div>
+								<div style="margin-left: 13px;">
+									<label>
+										<input type="radio" name="users" value="1" checked> 全部用户
+									</label>
+								</div>
+								<div>
+									<label>
+										<input type="radio" name="users" value="2">
+										标签用户
+									</label>
+								</div>
+								<div>
+									<label>
+										<input type="radio" name="users" value="3">
+										新用户
+									</label>
+								</div>
+								<div style="margin-left: -12px;">
+									<label>
+										<input type="radio" name="users" value="4">
+										指定设备
+									</label>
+								</div>
+							</div>
+							<div class="select-city" style="display: none;">
+								<div class="item">
+									<span>省市:</span>
+									<button type="button" class="btn btn-sm btn-default show-city-modal">请选择</button>
+									<div class="selected-citys"></div>
+								</div>
+							</div>
+							<div class="deviceCId" style="display: none;">
+								<div class="item">
+									<span>设备id:</span>
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<!-- 推送设置 -->
+						<div class="pushSet">
+							<h2>推送设置</h2>
+							<div class="messageType">
+								<div>
+									推送类型:
+								</div>
+								<div style="margin-left: 23px;">
+									<label>
+										<input type="radio" class="openJumpType" name="openJumpType" value="2" checked>
+										活动推送
+									</label>
+								</div>
+								<div>
+									<label>
+										<input type="radio" class="openJumpType" name="openJumpType" value="3" disabled="disabled">
+										用户推送
+									</label>
+								</div>
+								<div>
+									<label>
+										<input type="radio" class="openJumpType" name="openJumpType" value="4" disabled="disabled">
+										动态推送
+									</label>
+								</div>
+							</div>
+							<!-- 活动链接 -->
+							<div class="activelink">
+									<label for="message-title">活动链接:</label>
+									<div>
+										<input type="text" style="min-width: 400px;" class="form-control links" autocomplete="off"
+											placeholder="请输入活动链接">
+										<small 
+											style="padding: 5px 0 10px 33px; font-size: 12px;display: none;color: rgb(169, 68, 66)"
+											class="link-tips"
+										>请输入活动链接</small>
+									</div>
+							</div>
+							<!-- 图片链接 -->
+							<div class="imgLink">
+								<div>图片链接:</div>
+								<div class="upload">
+									<i class="iconfont icon-shangchuan1"></i>
+									<input type="file" style="display: none;" class="file-upload">
+								</div>
+							</div>
+							<p
+								style="padding: 5px 0 10px 111px;margin-top: 10px; font-size: 12px;display: none;color: rgb(169, 68, 66)"
+								class="media-tips"
+							>请选择活动图片</p>
+						</div>
+						<!-- 发送按钮 -->
+						<div>
+							<button type="button" class="btn btn-large btn-block btn-primary send-btn">发送</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 选择城市的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="city-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">选择省市</h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-seleted">
+						<p>最多选择20项目</p>
+						<div>
+
+						</div>
+					</div>
+					<div class="city-all">
+						<div class="city-title">
+							<p class="city-alls active">全部</p>
+						</div>
+						<div class="province">
+							<p data-index="0" data-num='11000000'>北京市</p>
+							<p data-index="1" data-num='12000000'>天津市</p>
+							<p data-index="2" data-num='13000000'>河北</p>
+							<p data-index="3" data-num='14000000'>山西</p>
+							<p data-index="4" data-num='15000000'>内蒙古</p>
+							<p data-index="5" data-num='21000000'>辽宁</p>
+							<p data-index="6" data-num='22000000'>吉林</p>
+							<p data-index="7" data-num='23000000'>黑龙江</p>
+							<p data-index="8" data-num='31000000'>上海市</p>
+							<p data-index="9" data-num='32000000'>江苏</p>
+							<p data-index="10" data-num='33000000'>浙江</p>
+							<p data-index="11" data-num='34000000'>安徽</p>
+							<p data-index="12" data-num='35000000'>福建</p>
+							<p data-index="13" data-num='36000000'>江西</p>
+							<p data-index="14" data-num='37000000'>山东</p>
+							<p data-index="15" data-num='41000000'>河南</p>
+							<p data-index="16" data-num='42000000'>湖北</p>
+							<p data-index="17" data-num='43000000'>湖南</p>
+							<p data-index="18" data-num='44000000'>广东</p>
+							<p data-index="19" data-num='45000000'>广西</p>
+							<p data-index="20" data-num='46000000'>海南</p>
+							<p data-index="21" data-num='50000000'>重庆市</p>
+							<p data-index="22" data-num='51000000'>四川</p>
+							<p data-index="23" data-num='52000000'>贵州</p>
+							<p data-index="24" data-num='53000000'>云南</p>
+							<p data-index="25" data-num='54000000'>西藏</p>
+							<p data-index="26" data-num='61000000'>陕西</p>
+							<p data-index="27" data-num='62000000'>甘肃</p>
+							<p data-index="28" data-num='63000000'>青海</p>
+							<p data-index="29" data-num='64000000'>宁夏</p>
+							<p data-index="30" data-num='65000000'>新疆</p>
+							<p data-index="31" data-num='71000000'>台湾</p>
+							<p data-index="32" data-num='81000000'>香港</p>
+							<p data-index="33" data-num='82000000'>澳门</p>
+						</div>
+						<div class="citys" style="display:none;">
+							<!-- chengshi -->
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default city-cancel" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary city-confirm" data-dismiss="modal">确认</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label>您的旧密码</label>
+							<input type="password" class="form-control" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label>新密码</label>
+							<input type="password" class="form-control" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label>确认新密码</label>
+							<input type="password" class="form-control" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" id="reset-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">重置密码</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="reset-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 col-xs-2 control-label">用户名</label>
+							<div class="col-sm-10 col-xs-10">
+								<input type="email" class="form-control" id="reset-name" placeholder="用户名" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 col-xs-2 control-label">密码</label>
+							<div class="col-sm-10 col-xs-10">
+								<input type="password" class="form-control" id="reset-pass" name="resetpass" placeholder="密码">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary reset-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 聊天室详情的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span>
+							<a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a>
+						</span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 901}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 901}}
+										{{ if item.menuId == 90101 }}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 90101 }}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 901 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<!-- <script src="../js/lib/paging.js"></script> -->
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+	<script src="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.js"></script>
+	<!-- <script src="../js/"></script> -->
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/contorl.js"></script>
+	<script src="../js/city.js"></script>
+	<script src="../js/src/releasepush.js"></script>
+	<!-- <script src="../js/src/bannedlist.js"></script> -->
+</body>
+
+</html>

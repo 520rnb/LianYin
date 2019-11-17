@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/pushlist.css">
+</head>
+
+<body>
+	<div class="suspension" style="display:none;">
+		<p class="Banned">禁言</p>
+	</div>
+	<div class="main">
+		<header>
+			<div class="left">
+			</div>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width: 1200px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">推送相关</li>
+						<li>推送列表</li>
+					</ol>
+					<form class="selecttime form-inline margin10" style="min-width:1200px;">
+						<!-- <div class="c-datepicker-date-editor  J-datepicker-range-day"> -->
+						<label>推送日期:</label>
+						<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day selectTime1">
+							<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+							<input placeholder="开始日期" name=""
+								class="c-datepicker-data-input only-date dynamicbeginDateLine beginDateLine beginDate" value="">
+							<span class="c-datepicker-range-separator">至</span>
+							<input placeholder="结束日期" name=""
+								class="c-datepicker-data-input only-date dynamicendDateLine endDateLine endDate" value="">
+						</div>
+						<!-- </div> -->
+						<div style="display:inline">
+							<label for="exampleInputEmail2" style="padding-left: 10px;">类型:</label>
+							<select name="targetType" class="targetType">
+								<option value="">所有用户</option>
+								<option value="1">全部用户</option>
+								<option value="2">标签用户</option>
+								<option value="3">新注册用户</option>
+								<option value="4">特定用户</option>
+							</select>
+						</div>
+						<div style="display:inline">
+							<label for="exampleInputEmail3" style="padding-left:10px;">状态:</label>
+							<select name="status" class="status">
+								<option value="">所有</option>
+								<option value="0">失败</option>
+								<option value="1">成功</option>
+							</select>
+						</div>
+						<div class="btn  checkapp btn-green" style="margin-left: 10px;">搜索</div>
+						<div class="btn btn-default rest btn-yellow" style="margin-left: 10px;">重置</div>
+					</form>
+					<div class="pushlist">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>推送平台</th>
+									<th>推送类型</th>
+									<th>标题</th>
+									<th>内容</th>
+									<th>目标类型</th>
+									<th>推送时间</th>
+									<th>状态</th>
+									<th>操作人</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="9" style="text-align: center;">
+										<div class="run-loader"></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="pageTool" style="min-width: 1200px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="tmp-pushlist">
+		{{ each data as v i }}
+			<tr>
+				<td>{{ i+1 }}</td>
+				<td>{{ if v.platform == 1}} 全部 {{else if v.platform == 2}} Andriod {{ else if v.platform == 3}} IOS {{ /if }} </td>
+				<td>{{ if v.openJumpType == 2}} 活动 {{else if v.openJumpType == 3}} 用户 {{ else if v.openJumpType == 4}} 动态 {{ /if }} </td>
+				<td>{{ v.title }}</td>
+				<td>{{ v.content }}</td>
+				<td>{{ if v.targetType == 1}} 全部用户 {{else if v.targetType == 2}} 标签用户 {{ else if v.targetType == 3}} 新注册用户 {{ else if v.targetType == 4 }} 特定用户 <i class="iconfont icon-chakan" data-id="{{ v.deviceCid}}"></i>  {{ /if }} </td>
+				<td>{{ v.pushTime | timeFormat }} </td>
+				<td>{{ if v.status == 0 }} <span class="color-red">失败</span> {{ else if v.status == 1 }} <span class="color-blue">成功</span>{{ /if }}</td>
+				<td>{{ v.userName }}</td>
+			</tr>
+		{{ /each }}
+	</script>
+
+	<!-- 没有获取到数据的模板 -->
+	<script type="text/html" id="no-data">
+		<tr>
+			<td colspan="9">没有数据</td>
+		</tr>
+	</script>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" id="reset-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">重置密码</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="reset-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="reset-name" placeholder="用户名" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="reset-pass" name="resetpass" placeholder="密码">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary reset-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 聊天室详情的模板 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="shebei">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">设备id</h4>
+				</div>
+				<div class="modal-body">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 901 }} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 901 }}
+										{{ if item.menuId == 90102 }}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 90102 }}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 901 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+	<!-- loaing动画的模板 -->
+	<script type="text/html" id="tmp-loading">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>推送平台</th>
+					<th>推送类型</th>
+					<th>标题</th>
+					<th>内容</th>
+					<th>目标类型</th>
+					<th>推送时间</th>
+					<th>状态</th>
+					<th>操作人</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="9" style="text-align: center;">
+						<div class="run-loader"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<!-- <script src="../js/lib/paging.js"></script> -->
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="https://lib.baomitu.com/fancybox/3.5.5/jquery.fancybox.min.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/pushlist.js"></script>
+</body>
+
+</html>

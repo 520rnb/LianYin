@@ -1,0 +1,64 @@
+.selecttime {
+	background-color: #fff;
+	padding: 10px 20px;
+	min-width: 1200px;
+	border-bottom: 1px solid #ccc;
+	border-radius: 4px;
+}
+.selecttime div {
+	vertical-align: middle;
+}
+.selecttime input {
+	height: 37px;
+}
+.selecttime select {
+	height: 37px;
+}
+.c-datepicker-date-editor {
+	height: 37px;
+}
+.c-datepicker-date-editor input {
+	height: 32px;
+}
+.pushlist {
+	margin: 10px 10px 0 10px;
+	background-color: #fff;
+	padding: 10px 20px;
+	min-width: 1200px;
+}
+.run-loader {
+	/* position: absolute; */
+	display: inline-block;
+	vertical-align: middle;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 30px;
+	height: 30px;
+	box-sizing: border-box;
+	border: 3px solid #409eff;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: loader-rotate 1s linear infinite;
+}
+
+@keyframes loader-rotate {
+	0% {
+		transform: rotate(0);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	text-align: center;
+}
+
+td i {
+	cursor: pointer;
+}
+.phone-content {
+	word-break: break-all;
+	word-wrap : break-word;
+}

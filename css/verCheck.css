@@ -1,0 +1,18 @@
+
+.version-list {
+	padding: 20px 20px 10px 20px;
+}
+.select {
+	height: 59px;
+	margin-left: 0px;
+	padding: 10px 20px;
+	margin-right: 10px;
+}
+.select select {
+	height: 37px;
+}
+#pageTool {
+	margin: 0;
+	margin-right: 10px;
+	padding-left: 10px
+}

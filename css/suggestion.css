@@ -1,0 +1,8 @@
+.select {
+	height: 59px;
+	padding: 10px 20px;
+	min-width: 1300px;
+}
+.select select {
+	height: 37px;
+}

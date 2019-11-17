@@ -1,0 +1,109 @@
+/* * {
+	font-family: "open sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+} */
+* {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  position: relative;
+  z-index: 10;
+  height: 80px;
+  width: 100%;
+  background-color: #448bf2;
+  box-shadow: 0px 2px 8px 0px #448bf2;
+  color: #fff;
+  overflow: hidden;
+}
+.header .logo {
+  margin-top: 20px;
+}
+.header img {
+  width: 40px;
+  height: 40px;
+  margin-left: 140px;
+}
+.header .logo-text {
+  font-family: 'PingFangSC-Medium';
+  font-size: 12px;
+  line-height: 12px;
+}
+.header .logo-text > h4 {
+  font-family: 'PingFangSC-Medium';
+  font-size: 18px;
+  line-height: 24px;
+}
+.userlogin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 80px;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/背景图.png');
+  background: url('../img/背景图.png') no-repeat;
+  background-size: cover;
+}
+.userlogin > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 367px;
+  height: 411px;
+  background-image: url('../img/登陆渐变边框.png');
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+}
+.userlogin > div .login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 288px;
+  height: 340px;
+}
+.userlogin > div .login-title {
+  width: 96px;
+  height: 33px;
+  font-family: 'PingFangSC-Medium';
+  font-size: 24px;
+  margin-bottom: 27px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0px;
+  color: #ffffff;
+}
+.userlogin > div .verifyImg {
+  height: 30px;
+  cursor: pointer;
+}
+.userlogin > div .verifycode {
+  padding-left: 0;
+}
+.userlogin > div .login-btn {
+  height: 50px;
+  background-color: #448bf2;
+  border-radius: 6px;
+  color: #fff;
+}
+.footer {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'NotoSansHans-Regular';
+  font-size: 12px;
+  color: #fff;
+}
+.footer img {
+  width: 13px;
+  height: 13px;
+}

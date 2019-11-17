@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/trendsNum.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<script>
+		// 获取的最后一次调用接口的时间
+		var loginDate = localStorage.getItem('recentTime');
+		if (loginDate != null) {
+			//  没有调用退出接口的 直接关闭页面
+			var date = new Date().getTime();
+			var place = date - loginDate;
+			if (place > 60 * 60 * 1000 + 10) {
+				location.href = '../../login.html';
+			} else {
+			}
+		} else {
+			// 上一次调用了退出接口退出了
+			location.href = '../../login.html';
+		}
+	</script>
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class="right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body c-datepicker-box">
+					<ol class="breadcrumb">
+						<li><a href="#">当前位置</a></li>
+						<li class="active">首页</li>
+					</ol>
+					<div class="statistical">
+						<!-- 渲染日活的坑位 -->
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-yonghu"></i>
+							</div>
+							<div>
+								<p>0</p>
+								<p>当日注册量</p>
+							</div>
+						</div>
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-jintian"></i>
+							</div>
+							<div>
+								<p>0</p>
+								<p>日活量</p>
+							</div>
+						</div>
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-themoon"></i>
+							</div>
+							<div>
+								<p>0</p>
+								<p>月活量</p>
+							</div>
+						</div>
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-shandian"></i>
+							</div>
+							<div>
+								<p>0%</p>
+								<p>次日留存率</p>
+							</div>
+						</div>
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-icon-test1"></i>
+							</div>
+							<div>
+								<p>0%</p>
+								<p>近7日留存率</p>
+							</div>
+						</div>
+						<div class="item">
+							<div class="iconfonts">
+								<i class="iconfont icon-tian"></i>
+							</div>
+							<div>
+								<p>0%</p>
+								<p>近30日留存率</p>
+							</div>
+						</div>
+					</div>
+					<div class="echart">
+						<div class="usermap">
+							<div class="echarts-map" id="echarts-map">
+								<div class="map-loading">
+									<div class="run-loader"></div>
+								</div>
+							</div>
+						</div>
+						<div class="line-all">
+							<div class="lines">
+								<!-- 用户选择时间 -->
+								<div class="selecttime">
+									<h4>每日动态发送数量</h4>
+									<div class="c-datepicker-date-editor J-datepickerTime-range J-datepicker-day">
+										<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+										<input placeholder="开始日期" name=""
+											class="c-datepicker-data-input only-date dynamicbeginDateLine beginDateLine" value="">
+										<span class="c-datepicker-range-separator">至</span>
+										<input placeholder="结束日期" name=""
+											class="c-datepicker-data-input only-date dynamicendDateLine endDateLine" value="">
+									</div>
+									<div class="btn btn-defaultn checkLine">查看</div>
+								</div>
+								<!-- 动态放发送数量折线图 -->
+								<div class="line"></div>
+							</div>
+							<div class="lines">
+								<!-- 用户选择时间 -->
+								<div class="selecttime">
+									<h4>每日用户注册量</h4>
+									<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day">
+										<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+										<input placeholder="开始日期" autocomplete="off"
+											class="c-datepicker-data-input only-date userbeginDateLine beginDateLine" value="">
+										<span class="c-datepicker-range-separator">至</span>
+										<input placeholder="结束日期" autocomplete="off"
+											class="c-datepicker-data-input only-date userendDateLine endDateLine" value="">
+									</div>
+									<div class="btn btn-defaultn checkAppLine">查看</div>
+								</div>
+								<!-- app注册量的折线图 -->
+								<div class="appline"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime | timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+						</ul>
+        </div>
+		</script>
+	<!-- 统计的渲染模板 -->
+	<script type="text/html" id="tmp-statistical">
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-yonghu"></i>
+			</div>
+			<div>
+				<p>{{ data.install }}</p>
+				<p>当日注册量</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-jintian"></i>
+			</div>
+			<div>
+				<p>{{ data.dayActive }}</p>
+				<p>日活量</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-themoon"></i>
+			</div>
+			<div>
+				<p>{{ data.monthActive }}</p>
+				<p>月活量</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-shandian"></i>
+			</div>
+			<div>
+				<p>{{ data.yesterdayRetention.toFixed(2) }}%</p>
+				<p>次日留存率</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-icon-test1"></i>
+			</div>
+			<div>
+				<p>{{ data.sevenDayRetention.toFixed(2) }}%</p>
+				<p>近7日留存率</p>
+			</div>
+		</div>
+		<div class="item">
+			<div class="iconfonts">
+				<i class="iconfont icon-tian"></i>
+			</div>
+			<div>
+					<p>{{ data.monthRetention.toFixed(2) }}%</p>
+					<p>近30日留存率</p>
+			</div>
+		</div>
+	</script>
+
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+			{{ each data as v i}}
+				<li>
+					<div class="drop-title {{ if i == 0 }} before-page {{/if}}" {{if i == 0 }} style="margin-top: 10px;" {{ /if }}>
+						<i class="iconfont {{ v.icon }}"></i>
+						{{ if i == 0 }} <span class="">{{ v.menuName }}</span> {{ else }}
+						<span class=" ">{{ v.menuName }}</span>
+						{{ /if }}
+					</div>
+					{{ if v.children != '' }}
+					<div class="drop-list active">
+							<ul>
+								{{ each v.children as item index }}
+								<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+								{{ /each  }}
+							</ul>
+					</div>
+					{{ /if }}
+				</li>
+			{{ /each }}
+			</ol>
+	</script>
+	<script
+		src="https://webapi.amap.com/maps?v=1.4.8&key=d4532258ae4662e18c74b6de4d5cf99e&plugin=AMap.CustomLayer"></script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+	<script src="../js/echarts-amap.min.js" charset="UTF-8"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/trendsNum.js"></script>
+</body>
+
+</html>

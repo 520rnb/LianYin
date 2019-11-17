@@ -1,0 +1,200 @@
+#chatRoom {
+  height: calc(100vh - 190px);
+	margin: 0 10px;
+}
+#chatRoom {
+	min-width: 1200px;
+}
+#chatRoom .rooms {
+	display: flex;
+	justify-content: space-around;
+	padding: 10px 0;
+}
+#chatRoom .rooms > div{
+	height: 710px;
+}
+.chatroom {
+	width: 44%;
+	min-width: 400px;;
+	background-color: #fff;
+	padding: 0 10px;
+}
+.chatroom .title {
+	font-size: 20px;
+	font-weight: 400;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.chatroom .content {
+	height: 543px;
+	overflow: auto;
+	position: relative;
+	overflow-x: hidden;
+  overflow-y: scroll;
+}
+.chatroom .content::-webkit-scrollbar {
+  display: none;
+}
+.chatroom .content::-moz-scrollbar {
+  display: none;
+}
+.chatlist {
+	width: 29%;
+	height: 600px;
+}
+/* headerPhoto */
+.headerPhoto {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+}
+/* 用户的聊天的样式布局 */
+.user-item {
+	display: flex;
+	margin-top: 20px;
+}
+.user-item > div:nth-child(2){
+	margin-left: 10px;
+}
+
+.user-item > div:nth-child(2){
+	margin-left: 10px;
+	position: relative;
+}
+.user-item .nickname {
+	margin: 0;
+}
+.user-item .chatcontent {
+	background: red;
+	max-width: 300px;
+	border-radius: 4px;
+	padding: 10px;
+	background-color: #fff;
+	background: #409eff;
+	color: #fff;
+}
+.time {
+	font-size: 12px;
+	color: #bbb8b8;
+}
+/* 三角形 */
+.triangle {
+	position: absolute;
+	top: 28px;
+	left: -16px;
+	width: 0;
+	height: 0;
+	border: 8px solid #fff;
+	border: 8px solid #409eff;
+	border-left: 8px solid transparent;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+}
+/* 用户的列表的样式 */
+.chatlist {
+	padding: 0 5px;
+	/* border: 1px solid #ccc; */
+	background-color: #fff;
+}
+.chatlist .title{
+	text-align: center;
+	font-size: 20px;
+	font-weight: 400;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 0;
+	border-bottom: 1px solid #ccc;
+}
+.chatlist .content {
+	height: 543px;
+	overflow: auto;
+	height: -webkit-calc(100% - 60px);
+}
+.user-items {
+	display: flex;
+	align-items: center;
+	padding-bottom: 10px;
+}
+.user-items > div:nth-child(2){
+	margin-left: 10px;
+}
+.user-items img {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+}
+/* 发布公告的样式 */
+.announcement > p{
+	font-size: 20px;
+	font-weight: bold;
+}
+.announcement  > div {
+	display: flex;
+	justify-items: center;
+	height: 83px;
+	margin-top: 10px;
+}
+textarea {
+	display: block;
+	padding: 5px 15px;
+	box-sizing: border-box;
+	width: 100%;
+	font-size: inherit;
+	color: #606266;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #dcdfe6;
+	border-radius: 4px;
+	display: block;
+	transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+	resize: none;
+}
+.send-announcement {
+	width: 80px;
+	background-color: #67c23a;
+	border: none;
+	user-select: none;
+	border-radius: 4px;
+}
+.suspension {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background-color: #fff;
+	width: 100px;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #ccc;
+	overflow: hidden;
+}
+.suspension  p {
+	width: 101%;
+	padding: 5px;
+	margin: 0;
+}
+.suspension  p:hover{
+	background-color: #689ceb;
+	cursor: pointer;
+	color: #fff;
+}
+#modal-Banned .modal-body > div{
+	display: flex;
+	justify-content: space-around;
+}
+.tmp-cement {
+	display: flex;
+	justify-content: center;
+	padding: 5px;
+  margin-top: 10px;
+}
+.tmp-cement p{
+    background-color: #e6e6e6;
+    padding: 6px;
+    border-radius: 10px;
+		font-size: 12px;
+		max-width: 300px;
+		word-wrap:break-word; 
+}

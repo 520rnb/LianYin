@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link rel="stylesheet" href="../js/message.css">
+	<link href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../js/zTreeStyle/zTreeStyle.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/authlist.css">
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width:1200px">
+						<li><a href="#">当前位置</a></li>
+						<li class="active">系统管理</li>
+						<li>角色管理</li>
+					</ol>
+					<form class="selecttime form-inline" style="min-width:1200px">
+						<div style="display:inline">
+							<label for="exampleInputEmail2">角色名:</label>
+							<input type="text" class="form-input userid" placeholder="请输入角色名" style="min-width:146px;">
+						</div>
+						<div class="btn btn-green checkapp">搜索</div>
+						<div class="btn btn-yellow rest">重置</div>
+					</form>
+					<div class="authlist">
+						<!-- <div style="padding: 10px 0">
+							<button class="btn btn-blue btn-sm addRole">新增角色</button>
+						</div> -->
+						<div class="content"></div>
+					</div>
+					<div id="pageTool"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- </div> -->
+
+	<!-- 角色模板 -->
+	<script type="text/html" id="tmp-authlist">
+		{{if data[1010201]}}
+			<div style="padding: 10px 0">
+				<button class="btn btn-blue btn-sm addRole">新增角色</button>
+			</div>
+		{{ /if }}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>角色名</th>
+					<th>备注</th>
+					<th>创建时间</th>
+					<th>更新时间</th>
+					{{ if data[1010203] || data[1010202]}}
+					<th>操作</th>
+					{{ /if }}
+				</tr>
+			</thead>
+			<tbody>
+					{{ each data.data as v i}}
+						<tr>
+							<td>{{ i+1 }}</td>
+							<td>{{ v.roleName }}</td>
+							<td>{{ v.remark }}</td>
+							<td>{{ v.createTime | timeFormat }}</td>
+							<td>{{ v.updateTime | timeFormat }}</td>
+							{{ if data[1010203] || data[1010202]}}
+								<td>
+									{{ if data[1010202] }}
+									<!-- <button class="btn btn-yellow btn-sm btn-change" data-roleId="{{ v.id }}" data-roleName="{{ v.roleName }}" data-remark="{{ v.remark }}">修改</button> -->
+										{{ if v.isSystemRole == 0 }}
+											{{ if data.gobalLevel < v.level }}
+												<button class="btn btn-yellow btn-sm btn-change" data-roleId="{{ v.id }}" data-roleName="{{ v.roleName }}" data-remark="{{ v.remark }}" data-level="{{ v.level }}">修改</button>
+											{{ /if }}
+										{{ else if v.isSystemRole == 1}}
+											{{ if data.gobalLevel == 1}}
+												<button class="btn btn-yellow btn-sm btn-change" data-roleId="{{ v.id }}" data-roleName="{{ v.roleName }}" data-remark="{{ v.remark }}" data-level="{{ v.level }}">修改</button>
+											{{ /if }}
+										{{ /if }}
+									{{ /if }}
+									{{ if data[1010203] }}
+										{{ if v.isSystemRole == 0}}
+											{{ if data.gobalLevel < v.level}}
+												<button class="btn btn-red btn-sm btn-del" data-roleId="{{ v.id }}">删除</button>
+											{{ /if }}
+										{{ /if }}
+									{{ /if }}
+								</td>
+							{{ /if }}
+						</tr>
+					{{ /each }}
+			</tbody>
+		</table>
+
+	</script>
+
+	<!-- 删除提示 -->
+	<div class="modal fade" tabindex="-1" id="del-tips" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示</h4>
+				</div>
+				<div class="modal-body">
+					<!-- <p>One fine body&hellip;</p> -->
+					是否删除角色
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary btn-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 新增角色的模态框  -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="addRole">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">新增角色</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal addRoleUser">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">角色名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control roleName" name="roleName" autocomplete="off" id="inputEmail3" placeholder="角色名">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">描述:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control remark" autocomplete="off" id="inputPassword3" placeholder="描述">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">权限选择:</label>
+							<div class="col-sm-10">
+								<div id="tree" class="ztree"></div>
+								<small class="help-block tree-help" data-bv-validator="notEmpty"
+								data-bv-for="" data-bv-result="INVALID" style="color: #a94442; display: none;">请选择权限</small>
+								<!-- <input type="text" style="display: none" name="treeData" value=""> -->
+							</div>
+						</div>
+					</form>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary news">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+				{{ each data as v i }}
+					<li>
+						<div class="drop-title {{ if i == 0}} shouye {{ /if }} "  >
+							<i class="iconfont {{ v.icon }}"></i>
+							{{if i == 0 }} 
+								<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+							{{else if i != 0}}
+								<span>{{ v.menuName }}</span>
+							{{ /if }}
+						</div>
+						{{ if v.children != ''}}
+								<div class="drop-list {{if v.menuId != 101}} active{{ /if }} ">
+									<ul>
+										{{each v.children as item index}}
+											{{ if v.menuId == 101}}
+												{{ if item.menuId == 10102}}
+													<li class="before-page">{{ item.menuName }}</li>
+												{{ else if item.menuId != 10102}}
+													<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+												{{ /if }}
+												{{ else if v.menuId != 1 }}
+												<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+											{{ /if }}
+										{{ /each }}
+									</ul>
+								</div>
+						{{ /if }}
+					</li>
+				{{ /each }}
+			</ol>
+	</script>
+	<!-- 修改角色的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="changeRole">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改角色</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="inputEmail5" class="col-sm-2 control-label">角色名</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control changeRoleName" id="inputEmail4" placeholder="角色名">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword5" class="col-sm-2 control-label">描述:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control changeRemark" id="inputPassword5" placeholder="描述">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">权限选择:</label>
+							<div class="col-sm-10">
+								<div id="changeTree" class="ztree"></div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary edit">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+								<li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+								<li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 没有数据的模板 -->
+	<script type="text/html" id="no-data">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>角色名</th>
+					<th>备注</th>
+					<th>创建时间</th>
+					<th>更新时间</th>
+					<th>修改</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="6">没有数据</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<!-- <script src="../js/lib/bootstrap-treeview.js"></script> -->
+	<script src="../js/jquery.ztree.all.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/authlist.js"></script>
+</body>
+
+</html>

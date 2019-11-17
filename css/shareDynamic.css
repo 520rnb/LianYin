@@ -1,0 +1,9 @@
+.selecttime div{
+	vertical-align: middle;
+}
+.selecttime input {
+	height: 37px;
+}
+.c-datepicker-date-editor input {
+	height: 35px;
+}

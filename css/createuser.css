@@ -1,0 +1,45 @@
+/* * {
+	font-family: "open sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+} */
+.createuser{
+	width: 1200px;
+	margin: 0 auto;
+}
+#createinfo input,
+#createinfo label,{
+	margin-left: 10px;
+}
+#createinfo .iconfont{
+	vertical-align: middle;
+	position: absolute;
+	left: 0;
+	top: 10px;
+	font-size: 12px;
+}
+#headImg-form  img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+#headImg-form input{
+	position: absolute;
+	top: 0;
+	left: 25px;
+	z-index: -1;
+}
+.sex{
+	vertical-align: middle;
+}
+.user-bg {
+	width: 100%;
+	height: 300px;
+}
+.bg{
+	position: relative;
+}
+.bg input{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10px;
+}

@@ -1,0 +1,403 @@
+.releasepush {
+	position: relative;
+	background-color: #fff;
+	margin: 10px;
+	background-color: #f5f5f5;
+	/* z-index: 100000000; */
+}
+.show-phone{
+	position: absolute;
+	right: 10px;
+	top: 0;
+	width: 304px;
+	height: 223px;
+	font-size: 12px;
+	background-image: url('../img/mobile-preview.0594db4.png');
+	background-size: cover;
+	overflow: hidden;
+	z-index: 0;
+}
+.iphone{
+	top: 234px;
+	right: 10px;
+	background-image: url('../img/iPhone.png');
+	background-size: cover;
+	background-position: 0px -1px;
+}
+.show-phone > div{
+	position: absolute;
+	top: 115px;
+	left: 28px;
+	width: 246px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+.iphone > div {
+	position: absolute;
+	top: 131px;
+	left: 28px;
+	width: 246px;
+	overflow: hidden;
+	display: flex;
+	/* align-items: center; */
+}
+.show-phone > div img {
+	width: 30px;
+	height: 30px;
+	border-radius: 4px;
+}
+.show-phone > div > div {
+	padding-left: 5px;
+}
+.iphone > div > div {
+	width: 178px;
+	overflow: hidden;
+}
+.show-phone p {
+	margin: 0;
+}
+.releasepush h2 {
+	padding-left: 10px;
+	font-size: 16px;
+	margin-top: 0px;
+	font-weight: bold;
+}
+.target .items {
+	width: 140px;
+	display: flex;
+	font-size: 14px;
+	justify-content: space-around;
+}
+.target .item{
+	width: 60px;
+	text-align: center;
+	border: 1px solid transparent;
+	cursor: pointer;
+	padding: 0 5px;
+}
+.target .selected{
+	border: 1px solid #01acf3;
+	/* color: red; */
+	color: #01acf3;
+	border-radius: 4px;
+}
+.select-city > div {
+	padding: 10px 0 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin: 10px 20px 10px 20px;
+}
+textarea {
+	resize: none;
+}
+#form-content > div > label {
+	font-size: 14px;
+	cursor: auto;
+	font-weight: 400;
+}
+.select-user {
+	font-size: 14px;
+}
+.through-content form {
+	width: 600px;
+	font-size: 12px;
+	color: #ccc;
+}
+.select-target .select-user {
+	display: flex;
+	width: 500px;
+}
+.select-target .select-user div:nth-child(1){
+	margin-left: 10px;
+}
+.select-target .select-user div {
+	width: 82px;
+	/* margin-left: 10px; */
+	font-weight: 400;
+}
+.select-target .select-user div label{
+	font-weight: 400;
+}
+.select-target .select-user input {
+	vertical-align: top;
+}
+.select-city > div > span {
+	margin-right: 10px;
+}
+.deviceCId {
+	/* width: 500px; */
+	padding: 10px;
+	margin: 0 20px;
+	border: 1px solid #ccc;
+	margin: 10px 20px 10px 20px;
+}
+.deviceCId input {
+	height: 34px;
+	border-radius: 4px;
+	line-height: 34px;
+	color: #555;
+	border: 1px solid #ccc;
+	width: 300px;
+	margin-left: 20px;
+}
+#form-content label {
+	text-align: left;
+	padding-left: 25px;
+}
+#city-modal .city-title{
+    padding: 0 20px;
+    position: relative;
+    top: 1px;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #f8fbfd;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    background: #f8fbfd;
+		margin-bottom: 0;
+}
+#city-modal .city-title p {
+	display: inline-block;
+	margin: 0;
+}
+#city-modal .modal-seleted > div{
+	display: flex;
+	flex-wrap: wrap;
+	/* justify-content: space-between; */
+}
+#city-modal .modal-seleted > div p {
+	margin: 0;
+	height: 32px;
+	padding: 0 18px;
+	position: relative;
+	line-height: 32px;
+	margin: 0 14px 14px 0;
+	background: #fff;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ccc;
+}
+
+#city-modal .province,
+#city-modal .citys {
+	overflow: hidden;
+	padding-left: 14px;
+	padding-top: 20px;
+	background: #f8fbfd;
+	border-top: 1px solid #ddd;
+}
+#city-modal .active{
+	background-color: #01acf3;
+	padding: 5px 10px;
+	color: #fff;
+}
+#city-modal .province  p,
+#city-modal .citys button {
+		margin: 0;
+    float: left;
+		position: relative;
+		min-width: 80px;
+    height: 32px;
+    padding: 0 18px;
+    position: relative;
+    line-height: 32px;
+    margin: 0 14px 14px 0;
+    background: #fff;
+    text-align: center;
+		cursor: pointer;
+		border: 1px solid #ccc;
+		border-radius: 0;
+}
+#city-modal .citys .disabled {
+	cursor: not-allowed;
+}
+#city-modal .province  p:hover,
+#city-modal .citys  p:hover{
+	border: 1px solid #01acf3;
+}
+/* #city-modal .province p, #city-modal .citys p.disbaled {
+	cursor: not-allowed;
+} */
+.messageType{
+	display: flex;
+	/* width: 500px; */
+	align-content: center;
+	padding-top: 10px;
+	width: 100%;
+	font-size: 14px;
+	/* justify-content: space-around; */
+}
+label {
+	cursor: pointer;
+	white-space:nowrap;
+	margin-bottom: 0px;
+}
+.messageType div {
+	width: 72px;
+	margin-left: 10px;
+}
+.messageType label {
+	vertical-align: middle;
+	font-weight: 400;
+}
+.activelink {
+	height: 34px;
+	margin-top: -15px;
+}
+.activelink label{
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 34px;
+	padding-left: 10px;
+	vertical-align: middle;
+	margin: 0;
+}
+.activelink> div > div{
+	margin: 0 -35px;
+	padding: 0;
+}
+.activelink input {
+	vertical-align: middle;
+}
+/* 上传图片的 */
+.imgLink {
+	height: 140px;
+	display: flex;
+	justify-items: center;
+}
+.imgLink > div {
+	/* width: 150px;
+	border: 1px solid #ccc; */
+	text-align: center;
+	height: 120px;
+	margin: 10px;
+	line-height: 120px;
+}
+.imgLink > div:nth-child(2){
+	width: 150px;
+	/* border: 1px solid #ccc; */
+	text-align: center;
+	height: 120px;
+	margin: 10px;
+	margin-left: 23px;
+	line-height: 120px;
+	border-radius: 4px;
+}
+.upload {
+	border: 1px solid #ccc;
+}
+.imgLink > div .iconfont {
+	font-size: 100px;
+}
+.imgLink img{
+	width: 100px;
+	height: 100px;
+}
+.imgLink > div {
+	position: relative;
+	display: block;
+}
+.imgLink > div > .del-img{
+	position: absolute;
+	top: -47px;
+	right: 17px;
+	color: red;
+	font-size: 16px;
+	cursor: pointer;
+}
+.releasepush .urlColor{
+	border: 1px solid  #a94442;
+	/* border-color: red; */
+}
+.bg{
+	position: absolute;
+	top: 115px;
+	left: 28px;
+	width: 245px;
+	height: 100px;
+}
+.form-horizontal .form-group {
+	min-width: 600px;
+}
+@media (min-width: 768px) {
+	.form-horizontal .control-label {
+		padding: 0;
+	}
+}
+
+.target,
+.through-content,
+.select-target,
+.messageType,
+.activelink,
+.imgLink {
+	background-color: #ccc;
+	background-color: #fff;
+	padding-left: 10px;
+	border-radius: 4px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: 10px;
+}
+.through-content {
+	/* margin-bottom:px; */
+	padding-bottom: 10px;
+}
+
+.activelink {
+	display: flex;
+	position: relative;
+	z-index: 100;
+	margin-top: 10px;
+}
+.pushSet{
+	margin-top: 10px;
+	width: 100%;
+	position: relative;
+	z-index: 0;
+	background-color: #fff;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	height: 350px;
+}
+/* .pushSet .activelink {
+	width: 50%;
+} */
+.pushSet .activelink input {
+	width: 500px;
+	margin-left: 34px;
+}
+.pushSet > h2 {
+	padding-left: 20px;
+	padding-top: 20px;
+	margin: 0;
+}
+.selected-citys {
+	display: flex;
+	padding-top: 10px;
+	flex-wrap: wrap;
+}
+.selected-citys p {
+	margin: 0;
+	height: 32px;
+	padding: 0 18px;
+	position: relative;
+	line-height: 32px;
+	margin: 0 14px 14px 0;
+	background: #fff;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ccc;
+}
+.selected-citys p i {
+	display: none;
+}
+/* 为了解决Firefox中的img标签src属性为空出现边框 */
+img[src=""]{
+	opacity: 0;
+}
+.phone-content {
+	word-wrap: wrap;
+	word-break: break-all;
+	white-space: wrap;
+}

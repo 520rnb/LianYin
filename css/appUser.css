@@ -1,0 +1,219 @@
+/* * {
+	font-family: "open sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+} */
+
+.content img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+.content .selecttime {
+  margin: 10px;
+  min-width: 1200px;
+}
+.selecttime div {
+	/* vertical-align: middle; */
+}
+.selecttime input {
+	height: 37px;
+}
+.c-datepicker-single-editor input {
+	height: 35px;
+}
+.content .form-group,
+.content .btn {
+  margin-top: -4px;
+}
+.content .appuser {
+	margin: 10px;
+	margin-bottom: 0px;
+}
+.content .user-imgs {
+  position: relative;
+}
+.content .user-imgs .play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.content .user-imgs .btn-play {
+  width: 24px;
+}
+.content .user-imgs img {
+  display: inline;
+}
+.Personal-dynamics .heade-photo {
+  display: inline;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.Personal-dynamics .nickname {
+  margin-left: 10px;
+  font-size: 18px;
+}
+.Personal-dynamics .dynamics {
+  padding-left: 64px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+.Personal-dynamics .details-content {
+  margin: 10px 0;
+  margin-left: 64px;
+}
+.Personal-dynamics .details-content .content-img {
+  width: 620px;
+}
+.Personal-dynamics .details-content img {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  padding-top: 5px;
+  border-radius: 4px;
+}
+.Personal-dynamics .comment {
+  margin-top: 10px;
+  padding-top: 10px;
+  margin: 0 30px;
+}
+.Personal-dynamics .comment .media-left img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.Personal-dynamics .comment .media-body .reply {
+  padding-left: 15px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+.Personal-dynamics .comment .media-body .reply-info {
+  padding: 5px;
+}
+.Personal-dynamics .comment .media-body .reply-info p {
+  padding: 0;
+  margin: 0;
+}
+.Personal-dynamics .comment p.comment-icon {
+  font-size: 12px;
+}
+.Personal-dynamics .btn-more,
+.Personal-dynamics .btn-nothing {
+  text-align: center;
+  margin: 5px 0;
+}
+.Personal-dynamics .text-del {
+  cursor: pointer;
+}
+.message {
+  display: flex;
+  margin: 0 auto;
+}
+.message > p {
+	width: 100px;
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+  display: -moz-box;
+}
+.table tr td {
+  line-height: 58px;
+}
+.Primarycomment {
+  padding: 10px 4px;
+  border-bottom: 1px solid #ccc;
+}
+.count {
+  font-size: 14px;
+}
+.time {
+  white-space: nowrap ;
+}
+#table tr td.operate{
+	text-align: left;
+}
+.selecttime{
+	padding: 10px 20px 10px 20px;
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	border-radius: 4px;
+}
+.btns{
+	/* padding: 20px; */
+	padding-top: 20px;
+	padding-bottom: 10px;
+	min-width: 1200px;
+	/* padding-left: 20px; */
+	background-color: #fff;
+	/* border-bottom: 1px solid #ccc; */
+	border-radius: 4px;
+	/* margin: 0 10px; */
+}
+.content .appuser{
+	margin-top: 0px;
+}
+.appuser{
+	padding: 0 20px;
+	background-color: #fff;
+}
+/* 上传的样式 */
+.upload-btn,
+.upload-item {
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 5px;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	line-height: 100px;
+	border: 1px dashed #fff;
+	border-radius: 4px;
+	font-size: 20px;
+}
+.upload-item img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	cursor: pointer;
+}
+.upload-btn{
+	border: 1px solid #ccc;
+}
+
+.upload-btn i {
+	font-size: 40px;
+}
+#loading {
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: .5;
+  position: absolute;
+  z-index: 10000;
+}
+.loading-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+}
+.donut {
+  display: inline-block;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: donut-spin 1.2s linear infinite;
+}
+@keyframes donut-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

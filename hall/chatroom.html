@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/chatroom.css">
+	<script src="../js/src/islogin.js"></script>
+</head>
+
+<body>
+	<div class="suspension" style="display:none;">
+		<p class="Banned">禁言</p>
+	</div>
+	<div class="main">
+		<header>
+			<div class="left">
+			</div>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">大厅相关</li>
+						<li>聊天大厅</li>
+					</ol>
+					<div id="chatRoom">
+						<!-- div -->
+						<!-- 聊天室和聊天用户列表 -->
+						<div class="rooms">
+							<div class="chatroom">
+								<p class="title">聊天室详情</p>
+								<div class="content">
+									<!-- 聊天室布局 -->
+								</div>
+								<div class="announcement" style="display: none;">
+									<div>
+										<textarea id="" autocomplete="off" placeholder="请输入公告内容,最多为50个字"></textarea>
+										<button class="send-announcement">发布</button>
+									</div>
+								</div>
+							</div>
+							<div class="chatlist">
+								<p class="title">聊天室成员列表(0)</p>
+								<div class="content">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" id="reset-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">重置密码</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="reset-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="reset-name" placeholder="用户名" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="reset-pass" name="resetpass" placeholder="密码">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary reset-yes">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 聊天室详情的模板 -->
+	<!-- 禁言的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="modal-Banned">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">禁言</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">脸影号</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control userId" id="modal-userid" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">禁言时长</label>
+							<div class="col-sm-10">
+								<select class="minute">
+									<option value="60">1个小时</option>
+									<option value="360">6个小时</option>
+									<option value="720">12个小时</option>
+									<option value="1440">1天</option>
+									<option value="10080">7天</option>
+									<option value="43200">30天</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">理由</label>
+							<div class="col-sm-10">
+								<select class="reason">
+									<option value="言语挑衅, 无事生非">言语挑衅, 无事生非</option>
+									<option value="违法行为">违法行为</option>
+									<option value="辱骂攻击">辱骂攻击</option>
+									<option value="诈骗钱财">诈骗钱财</option>
+									<option value="垃圾广告">垃圾广告</option>
+									<option value="血腥暴力">血腥暴力</option>
+									<option value="政治敏感">政治敏感</option>
+									<option value="酒托饭托">酒托饭托</option>
+									<option value="色情骚扰">色情骚扰</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">详情</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control description" placeholder="禁言详细描述">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary btn-addGag">禁言</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<script type="text/html" id="tmp-chat-details">
+		<div class="user-item" data-id="{{ content.user.id }}">
+			<div>
+				<img
+					src="{{ content.user.portrait }}"
+					alt="" class="headerPhoto">
+			</div>
+			<div>
+				<p class="nickname">
+					<span class="span-name">	{{ content.user.name }}</span>
+					<span class="time">{{ sentTime | timeFormat }}</span>
+				
+				</p>
+				<!-- 聊天的内容 -->
+				<div class="chatcontent">
+					{{ content.content }}
+				</div>
+				<div class="triangle"></div>
+			</div>
+		</div>
+	</script>
+	<!-- 聊天室在线用户的列表的模板 -->
+	<script type="text/html" id="tmp-cat-list">
+		{{each data as v i }}
+				<div class="user-items" data-id="{{ v.id }}">
+					<div>
+						<img
+							src="{{ v.portrait }}"
+							alt="">
+					</div>
+					<div>{{ v.name }}</div>
+				</div>
+		{{ /each }}
+	</script>
+
+	<script type="text/html" id="tmp-cement">
+	<!-- 聊天室公告的模板 -->
+		<div class="tmp-cement">
+			<p>{{ content.message }}</p>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 801}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 801}}
+										{{ if item.menuId == 80101}}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 80101}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 801 }}
+										<li ><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<!-- <script src="../js/lib/paging.js"></script> -->
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="http://cdn.ronghub.com/RongIMLib-2.3.5.min.js"></script>
+	<script src="http://cdn.ronghub.com/RongEmoji-2.2.7.min.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/contorl.js"></script>
+	<!-- <script src="../js/src/backstage.js"></script> -->
+	<script src="../js/src/chatroom.js"></script>
+</body>
+
+</html>

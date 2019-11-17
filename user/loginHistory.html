@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/datepicker.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/loginHistory.css">
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width:1300px;">
+						<li><a href="javascript:;">当前位置</a></li>
+						<li class="active">APP管理</li>
+						<li>登录历史查询</li>
+					</ol>
+					<div class="loginhistory margin10" style="min-width:1300px;">
+						<div class="loginhistory-info border-bottom">
+							<label>登录日期:</label>
+							<div class="c-datepicker-date-editor c-datepicker-single-editor J-datepicker-day">
+								<i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+								<input placeholder="开始日期" autocomplete="off"
+									class="c-datepicker-data-input only-date userbeginDateLine beginDateLine" value="">
+								<span class="c-datepicker-range-separator">至</span>
+								<input placeholder="结束日期" autocomplete="off"
+									class="c-datepicker-data-input only-date userendDateLine endDateLine" value="">
+							</div>
+							<label style="padding-left: 10px;">脸影号:</label>
+							<input type="text" class="btn-user" placeholder="脸影号" style="margin-right: 10px;">
+							<button class="btn btn-defalut btn-history btn-green" style="border:1px solid #ccc; margin-right: 10px;">搜索</button>
+							<button class="btn btn-defalut btn-resize btn-yellow" style="border:1px solid #ccc"> 重置</button>
+						</div>
+						<div class="history-data" style="margin-top:10px;">
+							<table class="table  table-hover" id="table">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>脸影号</th>
+										<th>头像</th>
+										<th>昵称</th>
+										<!-- <th>手机号码</th> -->
+										<th>年龄</th>
+										<th>性别</th>
+										<!-- <th>个性签名</th> -->
+										<th width="180">登录时间</th>
+										<th>登录渠道</th>
+										<th>app版本</th>
+										<th>设备</th>
+										<th>系统</th>
+										<th>ip</th>
+										<th>地址</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="14">没有数据</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div id="pageTool" style="display: none;min-width:1300px;"></div>
+						<div id="load">
+							<div class="ball-clip-rotate-pulse" style="position:absolute;top:50%;left:50%;">
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+	<!-- 这里是用户的记录的模板 -->
+	<script type="text/html" id="tmp-history">
+		<table class="table  table-hover" id="table">
+                {{ each data.data as v i }}
+                    <tr>
+												<td>{{ i+1 }}</td>
+												<td>{{ v.userId }}</td>
+                        <td>
+                            <img src="{{ v.headImg + '?x-oss-process=image/quality,q_10'}}" class="header-photo" alt="">
+                        </td>
+												<td>{{ v.nickName }}</td>
+												<!-- <td>{{ v.mobile }}</td> -->
+												<td>{{ v.age }}</td>
+                        <td>{{ if v.sex == 1 }} 男 {{ else if v.sex == 2 }} 女 {{ /if }}</td>
+                        <!-- <td>{{ v.individualResume }}</td> -->
+                        <td class="time">{{ v.loginTime | timeFormat }}</td>
+                        <!-- <td>{{ if v.loginChannel == 1 }} 正常 {{ else if v.loginChannel == 2 }} 异常 {{ /if }}</td> -->
+												<td>{{ if v.loginChannel == 1 }} IOS {{ else if v.loginChannel == 2 }} Android {{ /if }}</td>
+												<td>{{ v.appVersion}}</td>
+                        <td>{{ v.loginDevice }}</td>
+                        <td>{{ v.systemVersion }}</td>
+												<td>{{ v.loginIp }}</td>
+												<td>{{ v.address }}</td>
+                    </tr>
+								{{ /each }}
+	</script>
+	<!-- 没有数据时候的模板 -->
+	<script type="text/html" id="no-data">
+		<tr>
+			<td colspan="14">没有数据</td>
+		</tr>
+	</script>
+	<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}"  >
+					<i class="iconfont {{ v.icon }}" class="iconfont icon-shouye"
+					style="position:static;font-size:16px;"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 201}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 201}}
+										{{ if item.menuId == 20104  }}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 20104}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 201 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/datepicker.all.min.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<!-- <script src="../js/lib/paging.js"></script> -->
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/loginHistory.js"></script>
+	<script src="../js/src/contorl.js"></script>
+
+</body>
+
+</html>

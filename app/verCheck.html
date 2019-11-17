@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>后台管理系统</title>
+	<script src="../js/src/islogin.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/paging.css">
+	<link rel="stylesheet" href="../js/message.css">
+	<link rel="stylesheet" href="../css/nprogress.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_876063_vuqzxhyqbxf.css">
+	<link rel="stylesheet" href="../css/comment.css">
+	<link rel="stylesheet" href="../css/verCheck.css">
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class=" right">
+				<!-- 登录用户的基本信息区域 -->
+			</div>
+		</header>
+		<div class="main-body clearfix">
+			<div class="slider">
+				<div class="media logo">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="../img/logo.png" alt="...">
+						</a>
+					</div>
+					<div class="media-body logo-text">
+						<h4 class="media-heading">脸影</h4>
+						Lianying
+					</div>
+				</div>
+				<div class="slide-bar">
+					<!-- 侧边栏 -->
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-body">
+					<!-- 面包屑导航 -->
+					<ol class="breadcrumb" style="min-width: 1300px;">
+						<li><a href="#">当前位置</a></li>
+						<li class="active">APP管理</li>
+						<li>版本检查</li>
+					</ol>
+					<div class="verCheck margin10" style="margin-right:0;margin-right: 0; min-width: 1300px;">
+						<div class="select border-bottom">
+							<label>平台:</label>
+							<select name="type" class="type">
+								<option value="">所有</option>
+								<option value="1">IOS</option>
+								<option value="2">安卓</option>
+							</select>
+							<button class="btn btn-search  btn-green">搜索</button>
+						</div>
+
+						<div class="version-list" style="margin-right:10px;margin-top: 10px;min-width: 1300px;">
+							
+						</div>
+						<div id="pageTool" style="min-width:1300px;"></div>
+						<div id="load"
+							style="display:none;width: 100%;height: 100%;position: absolute;top:0;left:0;z-index: 100000;min-width: 1200px;">
+							<div class="ball-clip-rotate-pulse" style="position:absolute;top:50%;left:50%;">
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- 版本删除的提示框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="del-version">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">温馨提示:</h4>
+				</div>
+				<div class="modal-body">
+					是否删除该版本
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+					<button type="button" class="btn btn-primary del-version-yes">是</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 添加新版本的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="addVersion-modal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">添加新版本</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal addVersion-form">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">APP名称</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control appName" placeholder="APP名称" name="appName">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">APP版本</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control appVersion" name="appVersio" placeholder="APP版本">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">平台</label>
+							<div class="col-sm-10">
+								<label style="font-weight:400;">
+									<input type="radio" value="1" id="ios" name="appVersion" checked> IOS
+								</label>
+								<label style="font-weight:400;margin-left: 5px;">
+									<input type="radio" value="2" name="appVersion" id="Android"> Android
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label ">自动更新</label>
+							<div class="col-sm-10">
+								<label for="one" style="font-weight:400;">
+									<input type="radio" id="one" value="1" name="appAutoUpdate"> 是
+								</label>
+								<label for="three" style="font-weight:400;margin-left: 5px;">
+									<input type="radio" value="2" name="appAutoUpdate" id="three"> 强制更新
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label ">更新描述</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control appDesc" name="appDesc" placeholder="更新描述">
+							</div>
+						</div>
+						<div class="form-group version-adders" style="display: none">
+							<label for="inputPassword3" class="col-sm-2 control-label ">下载地址</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control downloadAddr" name="downloadAddr" placeholder="下载地址">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary addVersion-yes">确认</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 用户修改自己的密码的模态框 -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="ModifyThePassword">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 修改密码用户输入区域 -->
+					<form class="ModifyFrom">
+						<div class="form-group">
+							<label for="exampleInputEmail1">您的旧密码</label>
+							<input type="password" class="form-control" id="exampleInputEmail1" placeholder="您的旧密码"
+								name="oldpassword">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">新密码</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="您的密码"
+								name="newpassword">
+						</div>
+						<div class="form-group">
+							<label for="Confirmyourpassword">确认新密码</label>
+							<input type="password" class="form-control" id="Confirmyourpassword" placeholder="确认您的密码"
+								name="confirmationcode">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary affirm">确认修改</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 登录用户的基本信息的模板 -->
+	<script type="text/html" id="tmp-user">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">{{data.userName}}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">权限: {{data.roleName}}</a></li>
+                <li><a href="#">用户状态: {{if data.userStatus == 1}} 正常 {{else if data.userStatus == 2}} 冻结{{/if}}</a></li>
+                <li><a href="#">最近登录: {{data.lastLoginTime |timeFormat}}</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="ModifyThePassword"><a href="javascript:;">修改密码</a></li>
+                <li class="logout"><a href="javascript:;">登出</a></li>
+            </ul>
+        </div>
+		</script>
+
+	<script type="text/html" id="tmp-versions">
+		{{ if data[2010701] }}
+			<div class="addVersion btn btn-default btn-sm btn-success root">新增版本</div>
+		{{ /if }}
+		<div class="lists">
+				<table class="table " id="table" style="margin-top:10px;">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th width="180">发布时间</th>
+								<th>APP名称</th>
+								<th>APP版本</th>
+								<th>平台</th>
+								<th>是否自动更新</th>
+								<th width="300">更新描述</th>
+								<th>下载地址</th>
+								<th>发布人</th>
+								{{ if data[2010702] }}
+									<th>操作</th>
+								{{ /if }}
+							</tr>
+						</thead>
+						<tbody>
+							{{each data.data as v i}}
+								<tr>
+									<td>{{i+1}}</td>
+									<td class="time">{{v.appIssueTime | timeFormat }}</td>
+									<td>{{ v.appName }}</td>
+									<td>{{ v.appVersion }}</td>
+									<td>{{ if v.appPlatform == 1 }} IOS {{else if v.appPlatform == 2}} Android {{ /if }}</td>
+									<td>{{ if v.appAutoUpdate == 0 }} 否 {{ else if v.appAutoUpdate == 1 }} 是 {{ else if v.appAutoUpdate ==2 }} 强制更新 {{ /if }}</td>
+									<td>
+										<p class="text-ellipsis" style="-webkit-line-clamp:3;-moz-line-clamp:3;width:300px;" data-toggle="tooltip" data-placement="top" title="{{ v.appDesc }}">{{ v.appDesc }}</p>
+									</td>
+									<td width="400px">
+									{{ v.downloadAddr }}
+									</td>
+									<td>
+										{{ v.userName }}
+									</td>
+									{{ if data[2010702] }}
+										<td>
+											<button class="btn btn-red btn-sm del-version" data-id="{{ v.id }}">删除</button>
+										</td>
+									{{ /if }}
+								</tr>
+							{{ /each }}
+						</tbody>
+					</table>
+		</div>
+	</script>
+	<!-- 没有数据 -->
+	<script type="text/html" id="no-data">
+			<table class="table " id="table" style="margin-top:10px;">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th width="180">发布时间</th>
+							<th>APP名称</th>
+							<th>APP版本</th>
+							<th>平台</th>
+							<th>是否自动更新</th>
+							<th width="300">更新描述</th>
+							<th>下载地址</th>
+							<th>发布人</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+							<tr>
+								<td colspan="10">没有数据</td>
+							</tr>
+					</tbody>
+				</table>
+		</script>
+
+
+		<!-- 侧边栏的模板 -->
+	<script type="text/html" id="tmp-sidebar">
+		<ol>
+		{{ each data as v i }}
+			<li>
+				<div class="drop-title {{ if i == 0}} shouye {{ /if }}">
+					<i class="iconfont {{ v.icon }}"></i>
+					{{if i == 0 }} 
+						<span><a href="{{v.path }}" style="display:inline;padding-right:60px;">{{ v.menuName }}</a></span>
+					{{else if i != 0}}
+						<span>{{ v.menuName }}</span>
+					{{ /if }}
+				</div>
+				{{ if v.children != ''}}
+						<div class="drop-list {{if v.menuId != 201}} active{{ /if }} ">
+							<ul>
+								{{each v.children as item index}}
+									{{ if v.menuId == 201}}
+										{{ if item.menuId == 20107}}
+											<li class="before-page">{{ item.menuName }}</li>
+										{{ else if item.menuId != 20107}}
+											<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+										{{ /if }}
+										{{ else if v.menuId != 201 }}
+										<li><a href="{{ item.href }}">{{ item.menuName }}</a></li>
+									{{ /if }}
+								{{ /each }}
+							</ul>
+						</div>
+				{{ /if }}
+			</li>
+		{{ /each }}
+	</ol>
+	</script>
+	<script src="https://lib.baomitu.com/jquery/1.12.2/jquery.min.js"></script>
+	<script src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.staticfile.org/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+	<script src="../js/lib/moment.js"></script>
+	<script src="../js/lib/nprogress.js"></script>
+	<script src="../js/lib/template-web.js"></script>
+	<script src="../js/lib/query.js"></script>
+	<script src="../js/paging.js"></script>
+	<script src="../js/lib/md5.min.js"></script>
+	<script src="../js/message.min.js"></script>
+	<script src="../js/src/comment.js"></script>
+	<script src="../js/src/verCheck.js"></script>
+</body>
+
+</html>
